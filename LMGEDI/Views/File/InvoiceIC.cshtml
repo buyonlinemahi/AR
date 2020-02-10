@@ -1,0 +1,281 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+    <script src="~/Scripts/knockout/Custom/knockout.custom-extenders.js"></script>
+    <script src="~/Scripts/InputMaskViewModel.js"></script>
+    <script src="@Url.Content("~/Scripts/knockout/ko.pager.js")"></script>
+    <script src="~/Scripts/JQuery/jquery-migrate-1.0.0.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".datepicker").datepicker({ dateFormat: 'mm/dd/yy' });
+        });
+
+</script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/File/FileICDepViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script type="text/javascript">  
+        var _fileICModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model)); 
+        var _FileICDepViewModel = new FileICDepViewModel();
+        _FileICDepViewModel.Init(_fileICModel);
+        ko.applyBindings(_FileICDepViewModel, $("#divInvoiceForIC").get(0));
+    </script>
+
+}
+<div id="divInvoiceForIC">
+@using (Html.BeginForm(GlobalConst.Actions.FileController.AddInvoice, GlobalConst.Controllers.File, System.Web.Mvc.FormMethod.Post, new
+{
+    id = "frmInvoiceDetail",
+    enctype = "multipart/form-data",
+    data_bind = "ajaxForm : { success : function(responseText ,statusText,xhr,$form){AddInvoiceSuccess(responseText);},beforeSubmit : InvoiceInfoFormBeforeSubmit}"
+}))
+    {
+    <div class="row">
+        <div class="col-lg-12 client-accordian">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading11">
+                    <h4 class="panel-title">
+                        Invoice
+
+                    </h4>
+                </div>
+                <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                    <div class="panel-body row">
+                        <div class="col-sm-6">
+                            <div class="form-group row label-font clearfix">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Invoice Number :</label>
+                                <div class="col-sm-7">
+                                    <input type="hidden"  name="Invoice.FileID" id="hidInvoiceFileID"  value="@ViewBag.FileID"/>
+                                    <input type="hidden" id="HFInvoiceID"  name="Invoice.InvoiceID" />
+                                    <input type="text" class="form-control" id="InvoiceNumber" required="required" data-bind="jqBootstrapValidation: {}" name="Invoice.InvoiceNumber" maxlength="25">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row label-font clearfix">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Invoice Amt ($):</label>
+                                <div class="col-sm-7">
+                                    <input type="hidden" id="hidInvoiceAmt"  />
+                                    <input autocomplete="off" type="text" class="form-control" id="InvoiceAmount" required="required" data-bind="jqBootstrapValidation: {} " data-validation-regex-regex="\d+(\.\d{1,2})?" maxlength="10" name="Invoice.InvoiceAmt">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row label-font clearfix">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Invoice Date :</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control datepicker" id="InvoiceDate" required="required" data-validation-regex-message="MM/DD/YYYY" data-validation-regex-regex="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d+$" data-bind="jqBootstrapValidation: {},mask : '99/99/9999'" name="Invoice.InvoiceDate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 deptToggle">
+                            <div class="form-group row label-font clearfix">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Invoice Sent :</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control datepicker" data-validation-regex-message="MM/DD/YYYY" data-validation-regex-regex="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d+$" data-bind="jqBootstrapValidation: {},mask : '99/99/9999'" name="Invoice.InvoiceSent" id="InvoiceSent">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 deptToggle">
+                            <div class="form-group row label-font clearfix">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Billing Week :</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control datepicker" data-validation-regex-message="MM/DD/YYYY" data-validation-regex-regex="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d+$" data-bind="jqBootstrapValidation: {},mask : '99/99/9999'" name="Invoice.BillingWeek" id="BillingWeek">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row label-font clearfix">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Department :</label>
+                                <div class="col-sm-7">
+                                    <select disabled="disabled" required="required" class="form-control" id="InvoiceDepartment" name="Invoice.DepartmentId"
+                                            data-bind="options: Departments, optionsText: 'DepartmentName',value:selectedDepartment,
+                                   optionsValue: 'DepartmentId',optionsCaption: 'Select Any Option'"></select>
+                                    <input type="hidden" name="Invoice.DepartmentId" value="5" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row label-font clearfix">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Adjustment Amt($):</label>
+                                <div class="col-sm-7">
+                                    <input autocomplete="off" type="text" class="form-control" id="AdjustmentAmt"  data-validation-regex-regex="\d+(\.\d{1,2})?" maxlength="10" name="InvoiceAdjustment.AdjustmentAmt">
+                                    <input type="hidden" id="CreatedBy" name="InvoiceAdjustment.CreatedBy" value=@Session[GlobalConst.SessionKeys.userID] />
+                                    <input type="hidden" id="hidAdjustmentAmt" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row label-font clearfix">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Balance Amt($):</label>
+                                <div class="col-sm-7">
+                                    <input autocomplete="off" type="text" class="form-control" id="InvoiceBalanceAmt" disabled="disabled" data-bind="jqBootstrapValidation: {} " data-validation-regex-regex="\d+(\.\d{1,2})?" maxlength="10">
+                                    <input type="hidden" id="hidInvoiceBalanceAmt" name="Invoice.InvoiceBalanceAmt" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 icUploadFile">
+                            <div class="form-group row label-font clearfix">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Upload :</label>
+                                <div class="col-sm-7">
+                                    <input type="file" class="form-control fileuploadborder" name="Invoice.UploadFile" id="UploadFile" />
+                                    <input type="hidden" name="Invoice.InvoiceFileName" id="InvoiceFileName" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row label-font clearfix">
+                                <label class="col-sm-2 control-label">Adjustment Notes :</label>
+                                <div class="col-sm-9">
+                                    <textarea rows="4" class="form-control resizenone" name="InvoiceAdjustment.AdjustmentNotes" type="text" id="AdjustmentNotes"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- col-lg-12 -->
+    </div><!-- row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <button class="btn btn-default padding-btn color-black pull-right margin-btm-30" type="submit">Save</button>
+            <button class="btn btn-default padding-btn color-black pull-right margin-left-20 margin-btm-30" data-dismiss="modal" id="CloseInvoicePartial" style="visibility:hidden;display:none;" aria-hidden="true" type="button">Cancel</button>
+        </div>
+    </div>
+}
+    <div class="row">
+        <div class="col-sm-12 margintop30">
+            <div class="white-background">
+                <table class="table table-bordered table-striped table-condensed home-table" style="margin-bottom:0px;">
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">File</th>
+                            <th style="width:20%;">Claim</th>
+                            <th style="width:20%;">Invoice</th>
+                            <th style="width:20%;">Amount</th>
+                            <th style="width:20%;">IC Amount</th>
+                        </tr>
+                    </thead>
+                 
+                </table>
+            </div>
+         </div>
+   </div>
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div style="height:300px;overflow-y:scroll;background-color:#fff;">
+                <table class="table table-bordered table-striped table-condensed home-table">
+                   
+                    <tbody>
+                        <!--ko if:InvoiceWithICDetails!= null-->
+                        <!-- ko foreach:InvoiceWithICDetails -->
+                        <tr>
+                            <td style="width:19.7%;" data-bind="text:FileFullName"></td>
+                            <td style="width:19.9%;" data-bind="text:ClaimNumber"></td>
+                            <td style="width:19.6%;" data-bind="text:InvoiceNumber"></td>
+                            <td style="width:19.6%;" data-bind="text:'$'+formatMoney(InvoiceAmt().toFixed(2))"></td>
+                            <td style="width:19%;" data-bind="text:'$'+formatMoney(InvoiceICAmt().toFixed(2))"></td>
+                        </tr>
+                        <!--/ko-->
+                        <!--/ko-->
+                    </tbody>
+                    <tfoot>
+                        <!--ko if:(InvoiceWithICDetails().length== 0)-->
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        &times;
+                                    </button>
+                                    No Result Found.
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+            <div class="col-sm-12 margintop30">
+                <div class="white-background">
+                    <table class="table table-bordered table-striped table-condensed home-table" style="margin-bottom:0px;">
+                        <thead>
+                            <tr>
+                                <th style="width:16.67%;">File</th>
+                                <th style="width:16.67%;">Claim</th>
+                                <th style="width:16.67%;">Invoice</th>
+                                <th style="width:16.67%;">Amount</th>
+                                <th style="width:16.67%;">IC Amount</th>
+                                <th style="width:16.67%;"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div style="height:300px;overflow-y:scroll;background-color:#fff;">
+                <table class="table table-bordered table-striped table-condensed home-table">
+                    <tbody>
+                        <!--ko if:InvoiceWithoutICDetails!= null-->
+                        <!-- ko foreach:InvoiceWithoutICDetails -->
+                        <tr>
+                            <td style="width:16.4%;" data-bind="text:FileFullName">
+                                <input type="text" data-bind="attr: { name: 'InvoiceICDetails['+ $index() + '\].FileID' },value:FileID" />
+                                <input type="text" data-bind="attr: { name: 'InvoiceICDetails['+ $index() + '\].InvoiceID' },value:InvoiceID" />
+                                <input type="text" data-bind="attr: { name: 'InvoiceICDetails['+ $index() + '\].DepartmentId' },value:DepartmentId" />
+                                <input type="text" data-bind="attr: { name: 'InvoiceICDetails['+ $index() + '\].FileFullName' },value:FileFullName" />
+                                <input type="text" data-bind="attr: { name: 'InvoiceICDetails['+ $index() + '\].ClaimNumber' },value:ClaimNumber" />
+                                <input type="text" data-bind="attr: { name: 'InvoiceICDetails['+ $index() + '\].InvoiceNumber' },value:InvoiceNumber" />
+                                <input type="text" data-bind="attr: { name: 'InvoiceICDetails['+ $index() + '\].InvoiceAmt' },value:InvoiceAmt" />
+                                <input type="text" data-bind="attr: { name: 'InvoiceICDetails['+ $index() + '\].InvoiceICAmt' },value:InvoiceICAmt" />
+                                <input type="text" data-bind="attr: { name: 'InvoiceICDetails['+ $index() + '\].IsChecked' },value:IsChecked" />
+                            </td>
+                            <td style="width:16.33%;" data-bind="text:ClaimNumber"></td>
+                            <td style="width:16.33%;" data-bind="text:InvoiceNumber"></td>
+                            <td style="width:16.33%;" data-bind="text:'$'+formatMoney(InvoiceAmt().toFixed(2))"></td>
+                            <td style="width:16.9%;"><input type="text" name="InvoiceICAmt" data-bind="value:InvoiceICAmt"></td>
+                            <td style="width:15.2%;"><input type="checkbox"  data-bind="checked: IsChecked "/></td>
+                        </tr>
+
+                        <!--/ko-->
+                        <!--/ko-->
+                    </tbody>
+                    <tfoot>
+                        <!--ko if:(InvoiceWithoutICDetails().length== 0)-->
+                        <tr>
+                            <td colspan="6">
+                                <div class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        &times;
+                                    </button>
+                                    No Result Found.
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+            <div class="col-sm-12">
+                <button class="btn btn-default padding-btn color-black pull-right margin-btm-30" type="submit" id="btnUpdateICAmount" data-bind="click:$root.UpdateICAmountInvoice">Save</button>
+            </div>
+        </div>
+</div>

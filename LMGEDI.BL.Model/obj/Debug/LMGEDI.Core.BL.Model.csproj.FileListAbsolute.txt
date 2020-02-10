@@ -1,0 +1,6 @@
+D:\Mahi_TFS\LMG\LMGEDI.BL.Model\bin\Debug\LMGEDI.BL.Model.dll
+D:\Mahi_TFS\LMG\LMGEDI.BL.Model\bin\Debug\LMGEDI.BL.Model.pdb
+D:\Mahi_TFS\LMG\LMGEDI.BL.Model\bin\Debug\LMGEDI.Core.Data.Model.dll
+D:\Mahi_TFS\LMG\LMGEDI.BL.Model\bin\Debug\LMGEDI.Core.Data.Model.pdb
+D:\Mahi_TFS\LMG\LMGEDI.BL.Model\obj\Debug\LMGEDI.BL.Model.dll
+D:\Mahi_TFS\LMG\LMGEDI.BL.Model\obj\Debug\LMGEDI.BL.Model.pdb

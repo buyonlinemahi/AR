@@ -1,0 +1,85 @@
+﻿@using LMGEDIApp.Infrastructure.Global;
+@model LMGEDIApp.Domain.Models.User.User
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>AR Management</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @Styles.Render("~/Css/bundles/bootstrap")
+    @Styles.Render("~/Css/Content/css")
+</head>
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div class="body-wrapper">
+        <div class="login-wrapper">
+            <img src="~/Content/img/login-logo-ar.png" alt="LMG" class="login-logo" />
+            @using (Html.BeginForm(GlobalConst.Actions.UserController.Login, GlobalConst.Controllers.User, FormMethod.Post, new
+{
+    id = "frmLoginUser",
+    enctype = "multipart/form-data",
+    @class = "form-signin"
+}))
+            {
+                <div class="login-box">
+                    <h1>Login Now</h1>
+                    <p>Enter your username and password:</p>
+                    <div class="textbox-container">
+                        <label>Username:</label>
+                        <input type="text" placeholder="" required title="username" name="Username" class="textbox" />
+                    </div>
+                    <div class="textbox-container">
+                        <label>Password:</label>
+                        <input type="password" placeholder="" required title="username" name="Password" class="textbox" />
+                    </div>
+                    <div class="clearfix">
+                        @*<div class="checkbox-container">
+                                <label>
+                                    <input type="checkbox" class="set">
+                                    Remember me
+                                </label><br>
+                                <label>
+                                    <input type="checkbox">
+                                    Forget Password
+                                </label>
+                            </div>*@
+                        <input type="submit" class="login-btn" value="Login" />
+                        @*<button class="login-btn">Login</button>*@
+                    </div>
+                    <!-- clearfix -->
+                    <div>
+                    </div>
+                    <div class="clearfix padding-5">
+                        <a href="#" class="link fleft">AR Management</a>
+                        <a href="#" class="link fright">Contact Us</a>
+                    </div>
+                    <!-- clearfix -->
+                </div>
+            }
+            <!-- login-box -->
+            <div class="login-shadow">
+                <img src="~/Content/img/shadow.png" alt="LMG" class="login-shadow" /><!-- clearfix -->
+            </div>
+            @if (Model.InvalidMsg != null)
+            {
+                <div class="alert-login alert-danger"> @Html.DisplayTextFor(m => m.InvalidMsg)</div>
+            }
+            <!-- login-box -->
+        </div>
+        <!-- login-wrapper -->
+    </div>
+</body>
+</html>

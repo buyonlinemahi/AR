@@ -1,0 +1,220 @@
+﻿@model LMGEDIApp.Domain.Models.LienTempTableModel.LienTempViewModel
+@using LMGEDIApp.Infrastructure.Global;
+@using System.Web.Script.Serialization
+
+@{
+    ViewBag.Title = "ImportExcel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/ImportExcel/ImportExcelViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="@Url.Content("~/Scripts/knockout/ko.pager.js")"></script>
+    <script type="text/javascript">
+        var dataModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model));
+        var _importExcel= new ImportExcelViewModel(dataModel);
+        ko.applyBindings(_importExcel, $("#divExcelUpload").get(0));
+    </script>
+
+}
+
+<div class="container-fluid" id="divExcelUpload">
+    <div class="row">
+
+        <div id="loaderDiv">
+            <input class="loader1 display-none" type="image" id="ImgSourceLoading" src="~/Content/img/loading.gif">
+        </div>
+        <div class="row">
+            <div class="col-lg-12 client-accordian">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading11">
+                        <h4 class="panel-title">
+                            <span aria-expanded="true" aria-controls="collapse11">
+                                Import Data
+                            </span>
+                        </h4>
+                    </div>
+                    <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                        <div class="panel-body row">
+                            @using (Html.BeginForm(GlobalConst.Actions.ExportExcelToDatabaseController.ImportExcel, GlobalConst.Controllers.ExportExcelToDatabase, FormMethod.Post, new
+                                {
+                                    id = "ExcelImport",
+                                    enctype = "multipart/form-data",
+                                    data_bind = "ajaxForm:{ success: function(responseText, statusText, xhr, $form){ UploadExcelButton(responseText, statusText, xhr, $form); }}"
+                                }))
+                            {
+
+                                <div class="col-sm-12">
+                                    <div class="row label-font">
+                                        <div class="col-sm-5">
+                                            <div class="form-group row clearfix">
+                                                <label for="inputEmail3" class="col-sm-4 control-label">Select Department</label>
+                                                <div class="col-sm-8">
+                                                    <select required="required" class="form-control" name="DepartmentId" id="DepartmentID"
+                                                            data-bind="options: Departments, optionsText: 'DepartmentName',value:selectedDepartment,
+                                                            optionsValue: 'DepartmentId',optionsCaption: 'Select Any Option'"></select>
+                                                </div>
+                                            </div>
+                                        </div><!-- col-sm-2 -->
+                                        <div class="col-sm-5">
+                                            <div class="form-group row">
+                                                <label for="exampleInputFile" class="col-sm-3 control-label ">File input</label>
+                                                <div class="col-sm-9 pull-left">
+                                                    <input type="file" class="fileuploadborder form-control" name="uploadFile" id="uploadFile" required="required" class="" data-bind="jqBootstrapValidation:{}" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                                           data-validation-regex-regex="([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx)$" data-validation-regex-message="Excel File Only" />
+                                                </div>
+
+                                            </div>
+                                        </div><!-- col-sm-2 -->
+                                        <div class="col-sm-1">
+                                            <button class="btn btn-default padding-btn margin-btm-30 pull-right" type="submit" id="uploadButtonData">Upload</button>
+                                        </div>
+
+                                        <div class="col-sm-1">
+                                            <input type="hidden" name="Uid" id="Uid" data-bind="value: $root.Uid" />
+                                            <input type="hidden" name="deptId" id="deptId" data-bind="value: $root.deptId" />
+
+                                            <button class="btn btn-default padding-btn margin-btm-30 pull-right" type="button" data-bind="click:$root.ImportDataButton">Move</button>
+                                            <button class="btn btn-default padding-btn margin-btm-30 pull-right" type="button" data-bind="click:$root.PullDataFromLien">PULL</button>
+                                        </div>
+                                    </div><!-- row -->
+                                </div>
+
+                            }
+
+                           @* <!--ko with:ImportExcelViewModel-->*@
+                            <input type="hidden" name="Take" id="hidtake" data-bind="value: $root.Take" />
+                            <input type="hidden" name="Skip" id="hidskip" data-bind="value: $root.Skip" />
+                           @* <!--/ko-->*@
+                        </div>
+                    </div>
+                </div>
+
+
+            </div><!-- col-lg-12 -->
+        </div><!-- row -->
+        <!--ko if:(TotalItemCount() > 0 || TotalItemCount() == 0 )-->
+        <div class="row">
+            <div class="col-sm-12 margintop30">
+                <div class="white-background">
+
+                    <table class="table table-bordered table-striped table-condensed home-table">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-1">First Name</th>
+                                <th class="col-sm-1">Last Name</th>
+                                <th class="col-sm-1">Claim</th>
+                                <th class="col-sm-1">Insurer</th>
+                                <th class="col-sm-1">Branch</th>
+                                <th class="col-sm-1">Employer</th>
+                                <th class="col-sm-1">Adjuster</th>
+                                <th class="col-sm-1">Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--ko if:FileUploadViewModelResults!= null-->
+                            <!-- ko foreach:FileUploadViewModelResults -->
+                            <tr>
+ 
+                                  
+
+                                <td>
+                                    <!--ko if:IsFirstNameUpdate()!= true-->
+                                    <span data-bind="text:FirstName" ></span>
+                                    <!--/ko-->
+                                    <!--ko if:IsFirstNameUpdate() == true-->
+                                    <input class="width100" type="text" name="FirstName" maxlength="50" id="FirstName" data-bind="value:FirstName,event:{change:$root.valueChanged}" />
+                                    <!--/ko-->
+                                </td>
+
+                                <td>
+                                    <!--ko if:IsLastNameUpdate()!= true-->
+                                    <span data-bind="text:LastName" ></span>
+                                    <!--/ko-->
+                                    <!--ko if:IsLastNameUpdate()== true-->
+                                    <input class="width100" type="text" name="LastName" maxlength="50" id="LastName" data-bind="value:LastName,event:{change:$root.valueChanged}" />
+                                    <!--/ko-->
+                                </td>
+                                <td>
+                                    <input class="width100" type="text" maxlength="100" name="Claim" id="Claim" data-bind="jqBootstrapValidation:{},value:Claim,event:{change:$root.valueChanged}" />
+                                    
+                                    <input type="hidden" data-bind="value:Claim" />
+                                    
+                                    <input type="hidden" name="UploadId" id="UploadId" data-bind="value:UploadId" />
+                                </td>
+
+                                <td>
+                                    <!--ko if:IsInsurerUpdate()!= true-->
+                                    <span data-bind="text:Insurer" ></span>
+                                    <!--/ko-->
+                                    <!--ko if:IsInsurerUpdate()== true-->
+                                    <input class="width100" type="text" name="Insurer" maxlength="50" id="Insurer" data-bind="value:Insurer,event:{change:$root.valueChanged}" />
+                                    <!--/ko-->
+                                </td>
+
+                                <td>
+                                    <!--ko if:IsInsurerBranchUpdate()!= true-->
+                                    <span data-bind="text:InsurerBranch" ></span>
+                                    <!--/ko-->
+                                    <!--ko if:IsInsurerBranchUpdate()== true-->
+                                    <input class="width100" type="text" name="InsurerBranch" maxlength="50" id="InsurerBranch" data-bind="value:InsurerBranch,event:{change:$root.valueChanged}" />
+                                    <!--/ko-->
+                                </td>
+
+                                <td>
+                                    <!--ko if:IsEmployerUpdate()!= true-->
+                                    <span data-bind="text:Employer" ></span>
+                                    <!--/ko-->
+                                    <!--ko if:IsEmployerUpdate()== true-->
+                                    <input class="width100" type="text" name="Employer" maxlength="50" id="Employer" data-bind="value:Employer,event:{change:$root.valueChanged}" />
+                                    <!--/ko-->
+                                </td>
+
+                                <td>
+                                    <!--ko if:IsAdjusterUpdate()!= true-->
+                                    <span data-bind="text:Adjuster" ></span>
+                                    <!--/ko-->
+                                    <!--ko if:IsAdjusterUpdate()== true-->
+                                    <input class="width100" type="text" name="Adjuster" maxlength="50" id="Adjuster" data-bind="value:Adjuster,event:{change:$root.valueChanged}" />
+                                    <!--/ko-->
+                                </td>
+
+                                <td><a class="inner-content-link blue text-deco show-pointer" data-bind="click:$root.DeleteFilesByFileIDButton">Delete</a> </td>
+
+                            </tr>
+                            <!--/ko-->
+                            <!--/ko-->
+                        </tbody>
+                        <tfoot>
+                            <!--ko if:(FileUploadViewModelResults().length== 0)-->
+                            <tr>
+                                <td colspan="8">
+                                    <div class="alert alert-info">
+                                        <button type="button" class="close" data-dismiss="alert">
+                                            &times;
+                                        </button>
+                                        No Result Found.
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- /ko -->
+                        </tfoot>
+
+                    </table>
+
+                    <div class="panel-body">
+                        <button class="btn btn-default padding-btn margin-btm-30 pull-right" type="submit" id="BtnUpdateGrid" data-bind="click:$root.UpdateResultSuccess">Update</button>
+                    </div>
+
+                    <nav class="margin-left">
+                        @Html.Partial("~/Views/Shared/_Paging.cshtml")
+                    </nav>
+                </div><!-- white-background -->
+            </div><!-- col-sm-12 -->
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
+

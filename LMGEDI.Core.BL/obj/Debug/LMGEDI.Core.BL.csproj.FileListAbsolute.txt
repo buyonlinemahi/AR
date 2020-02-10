@@ -1,0 +1,9 @@
+D:\Mahi_TFS\LMG\LMGEDI.Core.BL\bin\Debug\LMGEDI.Core.BL.dll
+D:\Mahi_TFS\LMG\LMGEDI.Core.BL\bin\Debug\LMGEDI.Core.BL.pdb
+D:\Mahi_TFS\LMG\LMGEDI.Core.BL\bin\Debug\LMGEDI.BL.Model.dll
+D:\Mahi_TFS\LMG\LMGEDI.Core.BL\bin\Debug\LMGEDI.Core.Data.Model.dll
+D:\Mahi_TFS\LMG\LMGEDI.Core.BL\bin\Debug\LMGEDI.BL.Model.pdb
+D:\Mahi_TFS\LMG\LMGEDI.Core.BL\bin\Debug\LMGEDI.Core.Data.Model.pdb
+D:\Mahi_TFS\LMG\LMGEDI.Core.BL\obj\Debug\LMGEDI.Core.BL.csprojResolveAssemblyReference.cache
+D:\Mahi_TFS\LMG\LMGEDI.Core.BL\obj\Debug\LMGEDI.Core.BL.dll
+D:\Mahi_TFS\LMG\LMGEDI.Core.BL\obj\Debug\LMGEDI.Core.BL.pdb

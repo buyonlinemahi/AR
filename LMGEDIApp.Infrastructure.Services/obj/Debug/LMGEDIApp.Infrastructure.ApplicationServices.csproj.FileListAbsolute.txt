@@ -1,0 +1,14 @@
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\bin\Debug\LMGEDIApp.Infrastructure.Services.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\bin\Debug\LMGEDIApp.Infrastructure.Services.pdb
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\bin\Debug\BCrypt.Net.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\bin\Debug\LMGEDIApp.Domain.Models.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\bin\Debug\LMGEDIApp.Infrastructure.ApplicationServices.Contracts.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\bin\Debug\LMGEDIApp.Infrastructure.Global.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\bin\Debug\Omu.ValueInjecter.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\bin\Debug\LMGEDIApp.Domain.Models.pdb
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\bin\Debug\LMGEDIApp.Infrastructure.ApplicationServices.Contracts.pdb
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\bin\Debug\LMGEDIApp.Infrastructure.Global.pdb
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\bin\Debug\BCrypt.Net.xml
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\obj\Debug\LMGEDIApp.Infrastructure.ApplicationServices.csprojResolveAssemblyReference.cache
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\obj\Debug\LMGEDIApp.Infrastructure.Services.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Services\obj\Debug\LMGEDIApp.Infrastructure.Services.pdb

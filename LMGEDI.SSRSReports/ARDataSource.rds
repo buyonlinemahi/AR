@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="ARDataSource">
+  <ConnectionProperties>
+    <Extension>SQL</Extension>
+    <ConnectString>Data Source=CORPSRVR\Sql2008;Initial Catalog=AR;Persist Security Info=True;User ID=uttam;password=uttam;</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>658e96ca-b650-4c45-95d3-3e6d58105f35</DataSourceID>
+</RptDataSource>

@@ -1,0 +1,455 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+    <script src="~/Scripts/knockout/Custom/knockout.custom-extenders.js"></script>
+    <script src="~/Scripts/InputMaskViewModel.js"></script>
+    <script src="@Url.Content("~/Scripts/knockout/ko.pager.js")"></script>
+    <script src="~/Scripts/JQuery/jquery-migrate-1.0.0.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".datepicker").datepicker({ dateFormat: 'mm/dd/yy' });
+            $('.datepicker').mask('99/99/9999');
+            $('.phonemask').mask('999-999-9999');
+            $('.taxidmask').mask('99-9999999');
+            $('.zipMaskformat').mask('99999');
+               
+           
+        });
+       
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/File/FileViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script type="text/javascript">
+        var userModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model));
+        var _FileViewModel = new FileViewModel();
+        _FileViewModel.Init(userModel);
+        ko.applyBindings(_FileViewModel, $("#DivFileManage").get(0));
+    </script>
+
+}
+
+<div id="DivFileManage">
+    @using (Html.BeginForm(GlobalConst.Actions.FileController.AddFile, GlobalConst.Controllers.File, System.Web.Mvc.FormMethod.Post, new
+{
+    id = "frmAddFile",
+    enctype = "multipart/form-data",
+    data_bind = "ajaxForm : { success : function(responseText ,statusText,xhr,$form){AddFileSuccess(responseText);},beforeSubmit : FilePageInfoFormBeforeSubmit}"
+}))
+    {
+        <div class="row">
+            <div class="col-lg-12 client-accordian">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading11">
+                        <h4 class="panel-title">
+                            <span id="title" aria-expanded="true" aria-controls="collapse11">
+                                Add New Records
+                            </span>
+                        </h4>
+                    </div>
+
+                    <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                        <div class="panel-body row">
+                    <div id="divDepartment" class="row panel-body">
+                    <div class="col-sm-6">
+                        <div class="form-group row label-font clearfix">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Department :</label>
+                            <div class="col-sm-9">
+                                <select required="required" class="form-control" name="DepartmentId" id="ddlDepartmentID"
+                                        data-bind="options: Departments, optionsText: 'DepartmentName',value:selectedDepartmentFile,
+                                    optionsValue: 'DepartmentId',optionsCaption: 'Select Any Option'"></select>
+                                <input type="hidden" id="hidDepartmentId" name="DepartmentId" />
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group row label-font clearfix">
+                            <label for="inputEmail3" class="col-sm-3 control-label">First Name :</label>
+                            <div class="col-sm-9">
+                                <input type="hidden" data-bind="value:FileID" name="FileID" id="hidFileId" />
+                                <input type="hidden" data-bind="value:IsLienClaimNumber" name="IsLienClaimNumber" id="hidIsLienClaimNumber" />
+                                <input type="hidden" data-bind="value:EmployerId" name="EmployerId" id="EmployerId" />
+                                <input type="hidden" data-bind="value:AdjusterId" name="AdjusterId" id="AdjusterId" />
+                                <input type="hidden" data-bind="value:InsurerId" name="InsurerId" id="InsurerId" />
+                                <input type="hidden" data-bind="value:InsurerBranchId" name="InsurerBranchId" id="InsurerBranchId" />
+                                <input type="text" autocomplete="off" class="form-control" required="required" data-bind="value:FirstName,jqBootstrapValidation: {}" name="FirstName" id="FirstName" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group row label-font clearfix">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Last Name :</label>
+                            <div class="col-sm-9">
+                                <input type="text" autocomplete="off" class="form-control" required="required" data-bind="value:LastName,jqBootstrapValidation: {}" name="LastName" id="LastName" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="nonICConditionGrid">
+                    <div class="col-sm-6">
+                        <div class="form-group row label-font clearfix">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Claim Number:</label>
+                            <div class="col-sm-9">
+                                <input type="text" autocomplete="off" class="form-control" required="required" data-bind="value:ClaimNumber,jqBootstrapValidation: {}" name="ClaimNumber" id="hidClaimNumber" maxlength="100">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group row label-font clearfix">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Adjuster :</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" readonly="readonly" required="required" data-bind="value:AdjusterName(),jqBootstrapValidation: {}" name="AdjusterName" id="AdjusterName">
+                                @*<input type="hidden" class="form-control" name="AdjusterId" id="AdjusterId">*@
+                                <input type="hidden" name="IsLienAdjusterID" id="DBNameAdjuster" />
+                            </div>
+                            <div class="col-sm-3">
+
+                                <button type="button" data-target="#myModalAddAdjuster" id="AddAdjusterModalPopUp" data-backdrop="static" data-keyboard="false" data-toggle="modal" class="btn btn-default padding-btn color-black pull-right ">Add</button>
+                                <button type="button" data-target="#myModal" id="SelectAdjusterModalPopUp" data-backdrop="static" data-keyboard="false" data-toggle="modal" class="btn btn-default padding-btn color-black pull-right marginright5">Search</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group row label-font clearfix">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Insurer :</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" readonly="readonly" required="required" data-bind="value:InsurerName(),jqBootstrapValidation: {}" name="InsurerName" id="InsurerName">
+                                @*<input type="hidden"  name="InsurerId" id="InsurerId"/>*@
+                                <input type="hidden" name="IsLienInsurerID" id="DBNameInsurer" />
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" data-target="#myModalAddInsurer" id="AddInsurerModalPopUp" data-backdrop="static" data-keyboard="false" data-toggle="modal" class="btn btn-default padding-btn color-black pull-right">Add</button>
+                                <button type="button" data-target="#myInsurerModal" id="SelectInsurerModalPopUp" data-backdrop="static" data-keyboard="false" data-toggle="modal" class="btn btn-default padding-btn color-black pull-right marginright5">Search</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group row label-font clearfix">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Insurer Branch :</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" readonly="readonly" required="required" data-bind="value:InsurerBranchName(),jqBootstrapValidation: {}" name="InsurerBranchName" id="InsurerBranchName">
+                                <input type="hidden" name="IsLienInsurerBranchID" id="DBNameInsurerBranch" />
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" data-target="#myModalAddInsurerBranch" id="AddInsurerBranchModalPopUp" data-backdrop="static" data-keyboard="false" data-toggle="modal" class="btn btn-default padding-btn color-black pull-right">Add</button>
+                                <button type="button" data-target="#myInsurerBranchModal" id="SelectInsurerBranchModalPopUp" data-backdrop="static" data-keyboard="false" data-toggle="modal" class="btn btn-default padding-btn color-black pull-right marginright5" data-bind="click:$root.SearchInsurerBranchNameByInsurerIDPOPUP">Search</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group row label-font clearfix">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Employer :</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" readonly="readonly" required="required" data-bind="value:EmployerName(),jqBootstrapValidation: {}" name="EmployerName" id="EmployerName">
+                                @*<input type="hidden" class="form-control" name="EmployerId" id="EmployerId">*@
+                                <input type="hidden" name="IsLienEmployerID" id="DBNameEmployer" />
+                            </div>
+                            <div class="col-sm-3">
+
+                                <button type="button" data-target="#myModalAddEmployer" id="AddEmployerModalPopUp" data-backdrop="static" data-keyboard="false" data-toggle="modal" class="btn btn-default padding-btn color-black pull-right ">Add</button>
+
+                                <button type="button" data-target="#myEmployerModal" id="SelectEmployerModalPopUp" data-backdrop="static" data-keyboard="false" data-toggle="modal" class="btn btn-default padding-btn color-black pull-right marginright5">Search</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group row label-font clearfix">
+                            <label for="inputNotes" class="col-sm-3 control-label">Notes :</label>
+                            <div class="col-sm-9">
+                                <textarea name="Notes" class="form-control" data-bind="text:Notes"></textarea>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div id="ICGrid">
+
+                      <div class="col-sm-6 ICGridHIde">
+                           <div class="form-group row label-font clearfix">
+
+                               <label for="inputEmail3" class="col-sm-3 control-label">Address :</label>
+                               <div class="col-sm-9">
+                                   <input type="hidden" data-bind="value:ICRecordDetailID" name="ICRecordDetailID" id="hidICRecordDetailID" />
+                                   <input type="text" autocomplete="off" class="form-control ICGridHIde"  data-bind="value:ICRecordDetailAddress" name="ICRecordDetailAddress" id="ICRecordDetailAddress" maxlength="50">
+                               </div>
+                           </div>
+                       </div>
+                      <div class="col-sm-6 ICGridHIde">
+                           <div class="form-group row label-font clearfix">
+                               <label for="inputEmail3" class="col-sm-3 control-label">City :</label>
+                               <div class="col-sm-9">
+                                   <input type="text" autocomplete="off" class="form-control ICGridHIde"  data-bind="value:ICRecordDetailCity" name="ICRecordDetailCity" id="ICRecordDetailCity" maxlength="50">
+                               </div>
+                           </div>
+                       </div>
+                      <div class="col-sm-6 ICGridHIde">
+                                       <div class="form-group row label-font clearfix">
+                                           <label for="inputEmail3" class="col-sm-3 control-label">State :</label>
+                                           <div class="col-sm-9">
+                                               <select  class="form-control" name="StateID" id="ddlStateID"
+                                                       data-bind="options: States, optionsText: 'StateName',value:selectedItem,
+                                   optionsValue: 'StateID',optionsCaption: 'Select Any Option'"></select>
+
+
+                                               <input type="hidden" name="StateID" value="5" />
+                                           </div>
+                                       </div>
+                                   </div>
+                               
+                      <div class="col-sm-6 ICGridHIde">
+                           <div class="form-group row label-font clearfix">
+                               <label for="inputEmail3" class="col-sm-3 control-label">Zip :</label>
+                               <div class="col-sm-9">
+                                   <input type="text" autocomplete="off" class="form-control zipMaskformat" data-bind="value:ICRecordDetailZip" name="ICRecordDetailZip" id="ICRecordDetailZip">
+                               </div>
+                           </div>
+                       </div>
+                      <div class="col-sm-6 ICGridHIde">
+                            <div class="form-group row label-font clearfix">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Tax Id :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" autocomplete="off" class="form-control taxidmask"  data-bind="value:ICRecordDetailTaxID" name="ICRecordDetailTaxID" id="ICRecordDetailTaxID" maxlength="50">
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                                      
+                    <div class="col-sm-12">
+                        @*<button class="btn btn-default padding-btn color-black pull-right margin-left-20 margin-btm-30" style="margin-right:20px;" type="button" data-bind="click:$root.FileCancel" id="CancelFileButton">Cancel</button>*@
+                        <button class="btn btn-default padding-btn color-black pull-right margin-btm-30" type="submit" id="SaveFileButton">Save & Continue</button>
+                    </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div id="InvoiceDivPartialFile">
+        <div class="col-sm-12">
+            <button class="btn btn-default padding-btn color-black pull-right margin-btm-30" data-target="#myDivInvoicePartialFile" data-backdrop="static" data-keyboard="false" data-toggle="modal" type="submit" id="openInvoicePopUp">Add Invoice</button>
+            <a class="btn btn-default padding-btn color-black pull-right margin-btm-30" id="openInvoiceICTab" target="_blank" type="button" data-bind="attr: {'href': '@Url.Action("InvoiceIC", "File")/' + FileID()}">Add Invoice</a>
+        </div>
+    </div>
+    <div id="DivInvoiceDetailPartial">
+        @{ Html.RenderPartial("~/Views/Shared/Invoice/_InvoiceDetails.cshtml");  }
+    </div>
+
+    <div class="modal fade" id="myDivInvoicePartialFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthadj">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="closeAddInvoiceModal" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <h4 class="modal-title">Invoice</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body" id="InvoicePanalBody">
+                        @{ Html.RenderPartial("~/Views/Shared/Invoice/_Invoice.cshtml");  }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModalAddAdjuster" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthadj">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="closeAddAdjusterModel" data-dismiss="modal" aria-hidden="true" data-bind="click:$root.AdjusterCancel">&times;</button>
+
+                    <h4 class="modal-title">Add Adjuster Record</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+
+                        @{ Html.RenderPartial("~/Views/Shared/Adjuster/_AddAdjuster.cshtml");  }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalAddEmployer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthadj">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="closeAddEmployerModel" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <h4 class="modal-title">Add Employer Record</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+
+                        @{ Html.RenderPartial("~/Views/Shared/Employer/_AddEmployer.cshtml");  }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalAddInsurer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthadj">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="closeAddInsurerModel" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <h4 class="modal-title">Add Insurer Record</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+
+                        @{ Html.RenderPartial("~/Views/Shared/Insurer/_AddInsurer.cshtml");  }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalAddInsurerBranch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthadj">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="closeAddInsurerBranchModel" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <h4 class="modal-title">Add Branch Name Record</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+                        @{ Html.RenderPartial("~/Views/Shared/InsurerBranch/_AddInsurerBranch.cshtml");  }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myEmployerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthadj">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="sectionCloseEmployer" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <h4 class="modal-title">Select Employer Record</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+
+                        @{ Html.RenderPartial("~/Views/Shared/Employer/_Employer.cshtml");  }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myInsurerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthadj">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="sectionCloseInsurer" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <h4 class="modal-title">Select Insurer Record</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+
+                        @{ Html.RenderPartial("~/Views/Shared/Insurer/_Insurer.cshtml");  }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myInsurerBranchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthadj">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="sectionCloseInsurerBranch" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <h4 class="modal-title">Select Insurer Branch Record</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+
+                        @{ Html.RenderPartial("~/Views/Shared/InsurerBranch/_InsurerBranch.cshtml");  }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthadj">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="sectAdjuster" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <h4 class="modal-title">Select Adjuster Record</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+
+                        @{ Html.RenderPartial("~/Views/Shared/Adjuster/_Adjuster.cshtml");  }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="PaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthpay">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="sectPayment" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <h4 class="modal-title">Payment</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+
+                        @{ Html.RenderPartial("~/Views/Shared/Payment/_PaymentDetails.cshtml");  }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="PaymentRefundModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthpay">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="sectPaymentRefund" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <h4 class="modal-title">Refund</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+
+                        @{ Html.RenderPartial("~/Views/Shared/Payment/_PaymentRefundDetails.cshtml");  }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    #alertify-cancel {
+        display: none !important;
+    }
+</style>

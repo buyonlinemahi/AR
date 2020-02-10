@@ -1,0 +1,236 @@
+﻿@using LMGEDIApp.Infrastructure.Global;
+@using System.Web.Script.Serialization
+@{
+    ViewBag.Title = "ClientCommission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/ClientCommission/ClientCommissionViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="@Url.Content("~/Scripts/knockout/ko.pager.js")"></script>
+    <script type="text/javascript">
+        var dataModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model));
+        var _clientCommission= new ClientCommissionViewModel(dataModel);
+        ko.applyBindings(_clientCommission, $("#divClientCommission").get(0));
+    </script>
+
+}
+<style type="text/css">
+    .disable-link
+{
+	pointer-events: none;
+	cursor: default;
+    color:black;
+}
+</style>
+
+<div class="container-fluid" id="divClientCommission">
+    <div class="row">
+
+        <div id="loaderDiv">
+            <input class="loader1 display-none" type="image" id="ImgSourceLoading" src="~/Content/img/loading.gif">
+        </div>
+        <div class="row">
+            <div class="col-lg-12 client-accordian">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading11">
+                        <h4 class="panel-title">
+                            <span aria-expanded="true" aria-controls="collapse11">
+                                Client Commissions
+                            </span>
+                        </h4>
+                    </div>
+                    <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                        <div class="panel-body row">
+                            <div class="col-sm-12">
+                                <div class="row label-font">
+                                    <div class="col-sm-9">
+                                        <div class="form-group row clearfix">
+                                            <label for="inputEmail3" class="col-sm-4 control-label">Client:</label>
+                                            <div class="col-sm-8">
+                                                <input type="hidden" name="hfdLientID" id="hfdLientID" />
+                                                <select class="form-control" id="ClientID" name="ClientID" required title="required"
+                                                        data-bind="options: ClientTypes, optionsText: 'LienClientName', optionsCaption:'Select Client',optionsValue: 'LienClientID', value: ClientType, event: { change:TypeChanged }"></select>
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-2 -->
+
+                                </div><!-- row -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div><!-- col-lg-12 -->
+        </div><!-- row -->
+        <!--ko if:(TotalItemCount() > 0 || TotalItemCount() == 0 )-->
+        <div class="row">
+            <div class="col-sm-12 margintop30">
+                <div class="white-background">
+                    <input type="hidden" name="hdfClientid" id="hdfClientid" />
+                    <input type="hidden" name="Take" id="hidtake" data-bind="value: $root.Take" />
+                    <input type="hidden" name="Skip" id="hidskip" data-bind="value: $root.Skip" />
+                    <input type="hidden" name="hdfcommissionId" id="hdfcommissionId" />
+                    <table class="table table-bordered table-striped table-condensed home-table">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-1">Sales Rep</th>
+                                <th class="col-sm-1">Due</th>
+                                <th class="col-sm-1">Invoiced</th>
+                                <th class="col-sm-1">Percentage</th>
+                                <th class="col-sm-1">Amount</th>
+                                <th class="col-sm-1">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--ko if:CommissionDetailsResult!= null-->
+                            <!-- ko foreach:CommissionDetailsResult -->
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="LienCStartDate" id="LienCStartDate" data-bind="value:LienCStartDate" />
+                                    <input type="hidden" name="LienCEndDate" id="LienCEndDate" data-bind="value:LienCEndDate" />
+                                    <input type="hidden" name="CommissionID" id="CommissionID" data-bind="value:CommissionID" />
+                                    <input type="hidden" name="InvoiceDateQuarter" id="InvoiceDateQuarter" data-bind="value:InvoiceDateQuater" />                                    
+                                    <span data-bind="text:LienCName"></span>
+                                </td>
+
+                                <td>
+                                    <span data-bind="text:CDueDate"></span>
+                                </td>
+                                <td>
+                                    <!--ko if:CTotalInvoicedAmount()!= null-->
+                                    <span data-bind="text:'$' + CTotalInvoicedAmount().toFixed(2)"></span>
+                                    <!--/ko-->
+                                </td>
+                                <td>
+                                    <span data-bind="text:LienCPrecentage() + '%'"></span>
+                                </td>
+                                <td>
+                                    <!--ko if:CAmountDue()!= null-->
+                                  
+                                    <a href="#" class="inner-content-link blue text-deco" data-target="#myDivInvoicePartialFile"
+                                       data-keyboard="false" data-toggle="modal" data-bind="attr: { id: 'ClienPaymentPopUp' +  $index() }, click:$root.SaveClientPaymentDetailsByID">
+                                        <span data-bind="text:'$'+CAmountDue().toFixed(2)" id="IDCAmountDate"></span>
+                                    </a>                                    
+                                    <!--/ko-->                                    
+                                </td>
+                                <td>
+                                    <input type="hidden" name="hdfIsPaymentRecevied" id="hdfIsPaymentRecevied" data-bind="value:IsPaymentRecevied()" />
+                                    <!--ko if:IsPaymentRecevied()== false-->
+                                    <span>
+                                        
+                                    </span>
+                                    <!--/ko-->
+                                    <!--ko if:IsPaymentRecevied()== true-->
+                                    <span>
+                                      
+                                    Paid</span>
+                                    <!--/ko-->
+                                </td>
+
+                            </tr>
+                            <!--/ko-->
+                            <!--/ko-->
+                            <!--ko if:CommissionDetailsResult() == null || CommissionDetailsResult().length==0-->
+                            <tr>
+                                <td colspan="8">
+                                    <div class="alert alert-info">
+                                        <button type="button" class="close" data-dismiss="alert">
+                                            &times;
+                                        </button>
+                                        No Result Found.
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- /ko -->
+                        </tbody>
+                    </table>
+                    <nav class="margin-left">
+                        @Html.Partial("~/Views/Shared/_Paging.cshtml")
+                    </nav>
+                </div><!-- white-background -->
+            </div><!-- col-sm-12 -->
+        </div>
+        <!--/ko-->
+    </div>
+
+    <div class="modal fade" id="myModalCommissionPayment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthadj">
+            <div class="modal-content">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="closeAddCommissionModel" data-dismiss="modal" aria-hidden="true" data-bind="click:$root.CommissionCancel">&times;</button>
+
+                    <h4 class="modal-title">Commission Payment</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 client-accordian">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="heading11">
+                                        <h4 class="panel-title">
+                                            Commission Payment
+                                        </h4>
+                                    </div>
+                                    <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                                        <div class="panel-body row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group row label-font clearfix">
+                                                    <label for="inputEmail3" class="col-sm-3 control-label">Amount Due :</label>
+                                                    <div class="col-sm-7">                                                     
+                                                        <input type="hidden" autocomplete="off" maxlength="50" class="form-control" required="required"
+                                                               name="CommissionPaymentID" id="CommissionPaymentID">
+                                                        <input type="text" autocomplete="off" maxlength="50" class="form-control" required="required" 
+                                                         data-bind="jqBootstrapValidation: {}" name="amountDue" id="amountDue" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group row label-font clearfix">
+                                                    <label for="inputEmail3" class="col-sm-3 control-label">Payment Amount :</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" autocomplete="off" maxlength="50" class="form-control" required="required"
+                                                               data-bind="jqBootstrapValidation: {}" name="paymentAmount" id="paymentAmount" onkeypress="return isNumberKeydecimal(this, event)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group row label-font clearfix">
+                                                    <label for="inputEmail3" class="col-sm-3 control-label">Check Number:</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" autocomplete="off" maxlength="12" class="form-control " required="required" maxLength="10"
+                                                               name="checknumber" id="checknumber" data-bind="jqBootstrapValidation: {} ">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group row label-font clearfix">
+                                                    <label for="inputEmail3" class="col-sm-3 control-label">Check Sent:</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" autocomplete="off" maxlength="12" class="form-control" required="required" 
+                                                               data-bind="jqBootstrapValidation: {} " name="checksent" id="checksent">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <button class="btn btn-default padding-btn margin-btm-30 pull-right" type="submit" id="btnsave" data-bind="click:SavePaymentDetail ">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div><!-- col-lg-12 -->
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+
+        </div>
+    </div>
+   
+</div>

@@ -1,0 +1,5 @@
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.ApplicationServices.Contracts\bin\Debug\LMGEDIApp.Infrastructure.ApplicationServices.Contracts.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.ApplicationServices.Contracts\bin\Debug\LMGEDIApp.Infrastructure.ApplicationServices.Contracts.pdb
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.ApplicationServices.Contracts\obj\Debug\LMGEDIApp.Infrastructure.ApplicationServices.Contracts.csprojResolveAssemblyReference.cache
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.ApplicationServices.Contracts\obj\Debug\LMGEDIApp.Infrastructure.ApplicationServices.Contracts.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.ApplicationServices.Contracts\obj\Debug\LMGEDIApp.Infrastructure.ApplicationServices.Contracts.pdb

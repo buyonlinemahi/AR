@@ -1,0 +1,5 @@
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Global\bin\Debug\LMGEDIApp.Infrastructure.Global.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Global\bin\Debug\LMGEDIApp.Infrastructure.Global.pdb
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Global\obj\Debug\LMGEDIApp.Infrastructure.Global.csprojResolveAssemblyReference.cache
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Global\obj\Debug\LMGEDIApp.Infrastructure.Global.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Infrastructure.Global\obj\Debug\LMGEDIApp.Infrastructure.Global.pdb

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{947D1B92-037B-4B4D-8902-B23AFC88041E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LMGEDI.Core.Data</RootNamespace>
+    <AssemblyName>LMGEDI.Core.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IAdjusterRepository.cs" />
+    <Compile Include="ICommissionPaymentRepository.cs" />
+    <Compile Include="ICommissionRepository.cs" />
+    <Compile Include="IDepartmentRepository.cs" />
+    <Compile Include="IEmployerRepository.cs" />
+    <Compile Include="IFileRepository.cs" />
+    <Compile Include="IICRecordDetailRepository.cs" />
+    <Compile Include="IInvoiceAdjustmentRepository.cs" />
+    <Compile Include="IInvoiceNoteRepository.cs" />
+    <Compile Include="IInsurerBranchRepository.cs" />
+    <Compile Include="IInsurerRepository.cs" />
+    <Compile Include="IInvoiceRepository.cs" />
+    <Compile Include="ILienTempTableRepository.cs" />
+    <Compile Include="IOCRRepository.cs" />
+    <Compile Include="IPaymentRefundRepository.cs" />
+    <Compile Include="IPaymentRepository.cs" />
+    <Compile Include="IPendingUploadRepository.cs" />
+    <Compile Include="IStateRepository.cs" />
+    <Compile Include="IUserRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Base.Data\Core.Base.Data.csproj">
+      <Project>{73ceac75-70d5-4270-9254-8d39115a6cd6}</Project>
+      <Name>Core.Base.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.Core.Data.Model\LMGEDI.Core.Data.Model.csproj">
+      <Project>{0a9c4291-2f13-4b39-bea6-46a5c93ac995}</Project>
+      <Name>LMGEDI.Core.Data.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

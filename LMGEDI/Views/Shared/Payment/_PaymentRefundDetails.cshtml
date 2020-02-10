@@ -1,0 +1,211 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    Layout = null;
+}
+<div id="divPaymentRefund">
+    <div class="row">
+        @using (Html.BeginForm(GlobalConst.Actions.FileController.SavePaymentRefundRecord, GlobalConst.Controllers.File, FormMethod.Post, new
+{
+    id = "frmAddPaymentRefund",
+    enctype = "multipart/form-data",
+    data_bind = "ajaxForm : { success : function(responseText ,statusText,xhr,$form){AddPaymentRefundDetailSuccess(responseText);},beforeSubmit : PaymentRefundInfoFormBeforeSubmit}"
+}))
+        {
+            <div class="col-lg-12 client-accordian">
+                <!--ko with:FileViewModel-->
+                <input type="hidden" name="RfTake" id="hidPaymentRefundtake" data-bind="value: $root.RfTake" />
+                <input type="hidden" name="RfSkip" id="hidPaymentRefundskip" data-bind="value: $root.RfSkip" />
+                <!--/ko-->
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading11">
+                        <h4 class="panel-title">
+
+                            Refund
+
+                        </h4>
+                    </div>
+                    <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                        <div class="panel-body row">
+                            <div class="col-sm-12">
+                                <div class="row label-font">
+                                    <div class="col-sm-6">
+                                        <div class="form-group row label-font clearfix">
+                                            <label for="inputEmail3" class="col-sm-3 control-label">Refund Amount($):</label>
+                                            <div class="col-sm-9">
+                                                <input type="hidden" name="FileID" data-bind="value:FileID" />
+                                                <input type="hidden" name="PaymentRefundID" data-bind="value:PaymentRefundID" />
+                                                <input type="hidden" name="InvoiceId" data-bind="value:InvoiceID" />
+                                                <input type="hidden" name="CheckUploadName" data-bind="value:CheckUploadName" />
+                                                <input type="text" required="required" class="form-control" name="RefundAmount" maxlength="10" data-bind="value:RefundAmount,jqBootstrapValidation: {}" data-validation-regex-regex="\d+(\.\d{1,2})?" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group row label-font clearfix">
+                                            <label for="inputEmail3" class="col-sm-3 control-label">Refund Date :</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="RefundReceived" required="required" data-validation-regex-message="MM/DD/YYYY" data-validation-regex-regex="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d+$" class="form-control datepicker" name="RefundReceived" data-bind="value:RefundReceived(),jqBootstrapValidation: {}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group row label-font clearfix">
+                                            <label for="inputEmail3" class="col-sm-3 control-label">Check Number :</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" required="required" name="CheckNumber" data-bind="value:CheckNumber,jqBootstrapValidation: {}" maxlength="50" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group row">
+                                            <label for="exampleInputFile" class="col-sm-3 control-label ">Upload Check :</label>
+                                            <div class="col-sm-9 pull-left">
+                                                <input type="file" class="form-control fileuploadborder" name="CheckUploadName1" id="CheckUploadNameRefund" />
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-2 -->
+                                    @*<div class="col-sm-3">
+                                            <button class="btn btn-default padding-btn margin-btm-30 pull-right" type="button">Upload</button>
+                                        </div>*@
+                                </div><!-- row -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input class="btn btn-default padding-btn color-black pull-right margin-left-20 margin-btm-30" type="submit" value="Save" />
+                    </div>
+                </div>
+            </div><!-- col-lg-12 -->
+        }
+    </div><!-- row -->
+    <!--ko if:(PaymentRefundCount() > 0 || PaymentRefundCount() == 0 )-->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-background">
+                <table class="table table-bordered table-striped table-condensed home-table">
+                    <thead>
+                        <tr>
+                            <th>Refund Amount</th>
+                            <th>Date</th>
+                            <th>Check Number</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--ko if:PaymentRefundDetails!= null-->
+                        <!-- ko foreach:PaymentRefundDetails -->
+                        <tr>
+                            <td data-bind="text:'$'+formatMoney(RefundAmount().toFixed(2))"></td>
+                            <!-- ko if:RefundReceived()!=null -->
+                            <td data-bind="text: moment(RefundReceived()).format('L')"></td>
+                            <!--/ko-->
+                            <!-- ko if:RefundReceived()==null -->
+                            <td></td>
+                            <!--/ko-->
+                            <td data-bind="text: CheckNumber"></td>
+                            <td>
+                                <a href="#" class="inner-content-link blue text-deco" data-bind="click:$root.ViewPaymentRefundLineItems">View&nbsp;</a>
+                                <!--ko if:CheckUploadName()!= null-->
+                                <span>|</span>
+                                <a href="#" class="inner-content-link blue text-deco" target="_blank" data-bind="attr: { href: CheckDownloadPath }">&nbsp;Check</a>
+                                <!--/ko-->
+                            </td>
+                        </tr>
+                        <!--/ko-->
+                        <!--/ko-->
+                    </tbody>
+                    <tfoot>
+                        <!--ko if:(PaymentRefundDetails().length== 0)-->
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        &times;
+                                    </button>
+                                    No Result Found.
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                    </tfoot>
+                </table>
+                <nav class="margin-left">
+
+                    <!-- ko if:RfPager().RfTotalItemCount() > 0 -->
+                    <div class="pagination" data-bind="with: RfPager">
+                        <div class="pagexofx">
+                            <span data-bind="text:RfFirstItemIndex"></span>
+                            -
+                            <span data-bind="text: RfLastItemIndex"></span>
+                            of
+                            <strong>
+                                <span data-bind="text: RfTotalItemCount"></span>
+                            </strong>
+                            total results.
+                        </div>
+                        <ul class="pagination">
+                            <!-- ko if:RfCurrentPage() === 1 -->
+                            <li class="disabled">
+                                <a href="#" class="disabledPage">&laquo;&laquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko ifnot:RfCurrentPage() === 1 -->
+                            <li>
+                                <a href="#" data-bind="click: function(){ RfCurrentPage(1); }">&laquo;&laquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko if:RfHasPrevPage -->
+                            <li>
+                                <a href="#" data-bind="click: function(){ RfCurrentPage(RfCurrentPage() - 1); }">&laquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko ifnot:RfHasPrevPage -->
+                            <li class="disabled">
+                                <a href="#" class="disabledPage">&laquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko foreach:RfPages -->
+                            <!-- ko if:$data === $parent.RfCurrentPage() -->
+                            <li class="active">
+                                <span class="currentPage" data-bind="text: $data"></span>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko if:$data !== $parent.RfCurrentPage() -->
+                            <li>
+                                <a href="#" data-bind="text: $data, click: function(){ $parent.RfCurrentPage($data); }"></a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- /ko -->
+                            <!-- ko if:RfHasNextPage -->
+                            <li>
+                                <a href="#" data-bind="click: function(){ RfCurrentPage(RfCurrentPage() + 1); }">&raquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko ifnot:RfHasNextPage -->
+                            <li class="disabled">
+                                <a href="#" class="disabledPage">&raquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko ifnot:RfCurrentPage() === RfLastPage() -->
+                            <li>
+                                <a href="#" data-bind="click: function(){ RfCurrentPage(RfLastPage()); }">&raquo;&raquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko if:RfCurrentPage() === RfLastPage() -->
+                            <li class="disabled">
+                                <a href="#" class="disabledPage">&raquo;&raquo;</a>
+                            </li>
+                            <!-- /ko -->
+                        </ul>
+
+                    </div>
+                    <!-- /ko -->
+                </nav>
+            </div><!-- white-background -->
+        </div><!-- col-sm-12 -->
+    </div>
+    <!-- /ko -->
+</div>

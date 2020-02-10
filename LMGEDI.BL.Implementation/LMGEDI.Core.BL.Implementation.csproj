@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0EE71EAF-8E23-4464-9F3A-20AC358809B8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LMGEDI.Core.BL.Implementation</RootNamespace>
+    <AssemblyName>LMGEDI.Core.BL.Implementation</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Omu.ValueInjecter">
+      <HintPath>..\..\Library\External\ValueInjecter\2.1\Omu.ValueInjecter.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdjusterImpl.cs" />
+    <Compile Include="CommissionImpl.cs" />
+    <Compile Include="DepartmentImpl.cs" />
+    <Compile Include="EmployerImpl.cs" />
+    <Compile Include="FileImpl.cs" />
+    <Compile Include="InsurerBranchImpl.cs" />
+    <Compile Include="InsurerImpl.cs" />
+    <Compile Include="InvoiceImpl.cs" />
+    <Compile Include="InvoiceNoteImpl.cs" />
+    <Compile Include="LienTempTableImpl.cs" />
+    <Compile Include="OCRImpl.cs" />
+    <Compile Include="PaymentImpl.cs" />
+    <Compile Include="PaymentRefundImpl.cs" />
+    <Compile Include="PendingUploadImpl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StateImpl.cs" />
+    <Compile Include="UserImpl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Base.Data.SqlServer\Core.Base.Data.SqlServer.csproj">
+      <Project>{6247ee28-1f47-44a2-8570-1975a5a733c9}</Project>
+      <Name>Core.Base.Data.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Base.Data\Core.Base.Data.csproj">
+      <Project>{73ceac75-70d5-4270-9254-8d39115a6cd6}</Project>
+      <Name>Core.Base.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.BL.Model\LMGEDI.Core.BL.Model.csproj">
+      <Project>{c6b31b31-ce16-4a7a-9559-dbdc5f14be6b}</Project>
+      <Name>LMGEDI.Core.BL.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.Core.BL\LMGEDI.Core.BL.csproj">
+      <Project>{2917cb2d-3613-4859-b990-d1d65b405227}</Project>
+      <Name>LMGEDI.Core.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.Core.Data.Model\LMGEDI.Core.Data.Model.csproj">
+      <Project>{0a9c4291-2f13-4b39-bea6-46a5c93ac995}</Project>
+      <Name>LMGEDI.Core.Data.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.Core.Data.SqlServer\LMGEDI.Core.Data.SqlServer.csproj">
+      <Project>{b5010e2c-ec7c-44d8-bbd7-6d15ae822ba1}</Project>
+      <Name>LMGEDI.Core.Data.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.Core.Data\LMGEDI.Core.Data.csproj">
+      <Project>{947d1b92-037b-4b4d-8902-b23afc88041e}</Project>
+      <Name>LMGEDI.Core.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

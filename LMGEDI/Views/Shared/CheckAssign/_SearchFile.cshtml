@@ -1,0 +1,192 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    Layout = null;
+}
+<div id="SearchFileID">
+    <div class="row">
+        <div class="col-lg-12 client-accordian">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading11">
+                    <h4 class="panel-title">
+                        <span>Search File
+                        </span>
+                    </h4>
+                </div>
+                <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                    <div class="panel-body row">
+                        <div class="col-sm-12">
+                            <div class="row label-font">
+                                <div class="col-sm-10">
+                                    <div class="form-group row">
+                                        <div class="col-sm-12 pull-left">
+                                            <input type="Text" class="form-control" name="searchTextFilePopUpOCR" placeholder="Search" id="searchTextFilePopUpOCR" required="required" data-bind="jqBootstrapValidation: {}" maxlength="100" />
+                                            <input type="hidden" name="hidsearch" id="hidsearch" data-bind="value: hidsearch" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- col-sm-2 -->
+                                <div class="col-sm-2">
+                                    <button class="btn btn-default padding-btn margin-btm-30 pull-left" type="submit" data-bind="click: $root.SearchFilePopUp">Search</button>
+
+                                </div>
+                            </div>
+                            <!-- row -->
+                        </div>
+                        <!--ko with:AssignCheckSearchFileViewModel-->
+                        <input type="hidden" name="Take" id="hidSearchtake" data-bind="value: $root.iTake" />
+                        <input type="hidden" name="Skip" id="hidSearchskip" data-bind="value: $root.iSkip" />
+                        <!--/ko-->
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+        <!-- col-lg-12 -->
+    </div>
+    <!-- row -->
+    <div class="row">
+        <div class="col-sm-12 " style="height: 145px; overflow-y: scroll;">
+            <div class="white-background">
+                <table class="table table-bordered table-striped table-condensed home-table">
+                    <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>Claim</th>
+                            <th>Insurer</th>
+                            <th>Insurer Branch</th>
+                            <th>Employer</th>
+                            <th>Outstanding Balance</th>
+                            <th>Invoice Date</th>
+                            <th>Invoice</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--ko if:SearchFileResult!= null-->
+                        <!-- ko foreach:SearchFileResult -->
+                        <tr>
+                            <td><span data-bind="text: FilesName" />
+                                <input type="hidden" name="FileID" id="FileID" data-bind="value: FileID" />
+                                <input type="hidden" name="InvoiceID" id="InvoiceID" data-bind="value: InvoiceID" /></td>
+                            <td><span data-bind="text: ClaimNumber" /></td>
+                            <td><span data-bind="text: InsurerName" /></td>
+                            <td><span data-bind="text: InsurerBranchName" /></td>
+                            <td><span data-bind="text: EmployerName" /></td>
+                            <td><span data-bind="text: '$' + parseFloat(OutstandingBalance()).toFixed(2)" /></td>
+                            <td><span data-bind="text: InvoiceDate" /></td>
+                            <td><a href="" data-bind="click: $root.SelectInvoiceNumberInSearchFile, text: InvoiceNumber"></a></td>
+                            
+                        </tr>
+                        <!--/ko-->
+                        <!--/ko-->
+                    </tbody>
+                    <tfoot>
+                        <!--ko if:(SearchFileResult().length== 0)-->
+                        <tr>
+                            <td colspan="8">
+                                <div class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        &times;
+                                    </button>
+                                    No Result Found.
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                    </tfoot>
+                </table>
+                @*<!-- ko ifnot:iPager().iTotalItemCount() > 0 -->
+                <p>
+                    No Record found
+                </p>
+                <!-- /ko -->
+                *@
+                <!-- ko if:iPager().iTotalItemCount() > 0 -->
+                <div class="pagination" data-bind="with: iPager">
+                    <div class="pagexofx">
+                        <span data-bind="text: iFirstItemIndex"></span>
+                        -
+                        <span data-bind="text: iLastItemIndex"></span>
+                        of
+                        <strong>
+                            <span data-bind="text: iTotalItemCount"></span>
+                        </strong>
+                        total results.
+                    </div>
+                    <ul class="pagination">
+                        <!-- ko if:iCurrentPage() === 1 -->
+                        <li class="disabled">
+                            <a href="#" class="disabledPage">&laquo;&laquo;</a>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko ifnot:iCurrentPage() === 1 -->
+                        <li>
+                            <a href="#" data-bind="click: function () { iCurrentPage(1); }">&laquo;&laquo;</a>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko if:iHasPrevPage -->
+                        <li>
+                            <a href="#" data-bind="click: function () { iCurrentPage(iCurrentPage() - 1); }">&laquo;</a>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko ifnot:iHasPrevPage -->
+                        <li class="disabled">
+                            <a href="#" class="disabledPage">&laquo;</a>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko foreach:iPages -->
+                        <!-- ko if:$data === $parent.iCurrentPage() -->
+                        <li class="active">
+                            <span class="currentPage" data-bind="text: $data"></span>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko if:$data !== $parent.iCurrentPage() -->
+                        <li>
+                            <a href="#" data-bind="text: $data, click: function () { $parent.iCurrentPage($data); }"></a>
+                        </li>
+                        <!-- /ko -->
+                        <!-- /ko -->
+                        <!-- ko if:iHasNextPage -->
+                        <li>
+                            <a href="#" data-bind="click: function () { iCurrentPage(iCurrentPage() + 1); }">&raquo;</a>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko ifnot:iHasNextPage -->
+                        <li class="disabled">
+                            <a href="#" class="disabledPage">&raquo;</a>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko ifnot:iCurrentPage() === iLastPage() -->
+                        <li>
+                            <a href="#" data-bind="click: function () { iCurrentPage(iLastPage()); }">&raquo;&raquo;</a>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko if:iCurrentPage() === iLastPage() -->
+                        <li class="disabled">
+                            <a href="#" class="disabledPage">&raquo;&raquo;</a>
+                        </li>
+                        <!-- /ko -->
+                    </ul>
+
+                </div>
+                <!-- /ko -->
+
+            </div>
+            <!-- white-background -->
+        </div>
+        <!-- col-sm-12 -->
+    </div>
+
+</div>
+

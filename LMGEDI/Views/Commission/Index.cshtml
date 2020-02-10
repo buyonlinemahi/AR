@@ -1,0 +1,107 @@
+﻿@using System.Web.Script.Serialization;
+@using LMGEDIApp.Infrastructure.Global;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/ClientCommission/getCommissionViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="@Url.Content("~/Scripts/knockout/ko.pager.js")"></script>
+    <script type="text/javascript">
+        var dataModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model));
+        var _clientCommissionRecord= new getCommissionViewModel(dataModel);
+        ko.applyBindings(_clientCommissionRecord, $("#divCommissions").get(0));
+    </script>
+
+}
+<div class="container-fluid" id="divCommissions">
+    <div class="row">
+        <div class="col-lg-12 client-accordian">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading11">
+                    <h4 class="panel-title">
+                        <span aria-expanded="true" aria-controls="collapse11">
+                            Commissions Dashboard
+                        </span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="row">
+                <!--ko if:(TotalItemCount() > 0 || TotalItemCount() == 0 )-->
+                <div class="col-sm-12 margintop30">
+                    <div class="white-background">
+                        <input type="hidden" name="hdfClientid" id="hdfClientid" />
+                        <input type="hidden" name="Take" id="hidtake" data-bind="value: $root.Take" />
+                        <input type="hidden" name="Skip" id="hidskip" data-bind="value: $root.Skip" />
+                        <input type="hidden" name="hdfcommissionId" id="hdfcommissionId" />
+                        <table class="table table-bordered table-striped table-condensed home-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-1">Due Date</th>
+                                    <th class="col-sm-1">Name</th>
+                                    <th class="col-sm-1">Client</th>
+                                    <th class="col-sm-1">Percent</th>
+                                    <th class="col-sm-1">Amount Due</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--ko if:CommissionDetailsResult!= null-->
+                                <!-- ko foreach:CommissionDetailsResult -->
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="LienCStartDate" id="LienCStartDate" data-bind="value:LienCStartDate" />
+                                        <input type="hidden" name="LienCEndDate" id="LienCEndDate" data-bind="value:LienCEndDate" />
+                                        <input type="hidden" name="LienCClientID" id="LienCClientID" data-bind="value:LienCClientID" />
+                                        <span data-bind="text:CDueDate"></span>
+                                    </td>
+
+                                    <td>
+                                        <span data-bind="text:LienCName"></span>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="inner-content-link blue text-deco" data-target="#myDivInvoicePartialFile" id="ClienPaymentPopUp"
+                                           data-backdrop="static" data-keyboard="false" data-toggle="modal" data-bind="click:$root.getCommissionDetails">
+                                            <span data-bind="text:LienClientName"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span data-bind="text:LienCPrecentage() + '%'"></span>
+                                    </td>
+                                    <td>
+
+
+                                        <span data-bind="text:'$'+CAmountDue().toFixed(2)" id="IDCAmountDate"></span>
+
+                                    </td>
+
+
+                                </tr>
+                                <!-- /ko -->
+                                <!-- /ko -->
+                                <!--ko if:CommissionDetailsResult() == null || CommissionDetailsResult().length==0-->
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="alert alert-info">
+                                            <button type="button" class="close" data-dismiss="alert">
+                                                &times;
+                                            </button>
+                                            No Result Found.
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- /ko -->
+                            </tbody>
+                        </table>
+                        <nav class="margin-left">
+                            @Html.Partial("~/Views/Shared/_Paging.cshtml")
+                        </nav>
+                    </div><!-- white-background -->
+                </div><!-- col-sm-12 -->
+                <!--/ko-->
+            </div>
+        </div>

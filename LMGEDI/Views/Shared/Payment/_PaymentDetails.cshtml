@@ -1,0 +1,142 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    Layout = null;
+}
+<div id="divPayment">
+    <div class="row">
+        @using (Html.BeginForm(GlobalConst.Actions.FileController.SavePaymentRecord, GlobalConst.Controllers.File, FormMethod.Post, new
+{
+    id = "frmAddPayment",
+    enctype = "multipart/form-data",
+    data_bind = "ajaxForm : { success : function(responseText ,statusText,xhr,$form){AddPaymentDetailSuccess(responseText);},beforeSubmit : PaymentInfoFormBeforeSubmit}"
+}))
+        {
+            <div class="col-lg-12 client-accordian">
+                <!--ko with:FileViewModel-->
+                <input type="hidden" name="Take" id="hidPaymenttake" data-bind="value: $root.Take" />
+                <input type="hidden" name="Skip" id="hidPaymentskip" data-bind="value: $root.Skip" />
+                <!--/ko-->
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading11">
+                        <h4 class="panel-title">
+                          
+                               Payment
+                            
+                        </h4>
+                    </div>
+                    <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                        <div class="panel-body row">
+                            <div class="col-sm-12">
+                                <div class="row label-font">
+                                    <div class="col-sm-6">
+                                        <div class="form-group row label-font clearfix">
+                                            <label for="inputEmail3" class="col-sm-3 control-label">Payment Amount($):</label>
+                                            <div class="col-sm-9">
+                                                <input type="hidden" name="FileID" data-bind="value:FileID" />
+                                                <input type="hidden" name="PaymentId" data-bind="value:PaymentId" />
+                                                <input type="hidden" name="InvoiceId" data-bind="value:InvoiceID" />
+                                                <input type="hidden" name="CheckUploadName" data-bind="value:CheckUploadName" />
+                                                <input type="text" required="required" class="form-control" name="PaymentAmount" maxlength="10" data-bind="value:PaymentAmount,jqBootstrapValidation: {}" data-validation-regex-regex="\d+(\.\d{1,2})?" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group row label-font clearfix">
+                                            <label for="inputEmail3" class="col-sm-3 control-label">Payment Date :</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="PaymentDate" required="required" data-validation-regex-message="MM/DD/YYYY" data-validation-regex-regex="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d+$" class="form-control datepicker" name="PaymentReceived" data-bind="value:PaymentReceived(),jqBootstrapValidation: {}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group row label-font clearfix">
+                                            <label for="inputEmail3" class="col-sm-3 control-label">Check Number :</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" required="required" name="CheckNumber" data-bind="value:CheckNumber,jqBootstrapValidation: {}" maxlength="50" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group row">
+                                            <label for="exampleInputFile" class="col-sm-3 control-label ">Upload Check :</label>
+                                            <div class="col-sm-9 pull-left">
+                                                <input type="file" class="form-control fileuploadborder" name="CheckUploadName1" id="CheckUploadName" />
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-2 -->
+                                    @*<div class="col-sm-3">
+                                            <button class="btn btn-default padding-btn margin-btm-30 pull-right" type="button">Upload</button>
+                                        </div>*@
+                                </div><!-- row -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input class="btn btn-default padding-btn color-black pull-right margin-left-20 margin-btm-30" type="submit" value="Save" />
+                    </div>
+                </div>
+            </div><!-- col-lg-12 -->
+        }
+    </div><!-- row -->
+    <!--ko if:(PaymentCount() > 0 || PaymentCount() == 0 )-->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-background">
+                <table class="table table-bordered table-striped table-condensed home-table">
+                    <thead>
+                        <tr>
+                            <th>Payment Amount</th>
+                            <th>Date</th>
+                            <th>Check Number</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--ko if:PaymentDetails!= null-->
+                        <!-- ko foreach:PaymentDetails -->
+                        <tr>
+                            <td data-bind="text:'$'+formatMoney(PaymentAmount().toFixed(2))"></td>
+                            <!-- ko if:PaymentReceived()!=null -->
+                                <td data-bind="text: moment(PaymentReceived()).format('L')"></td>
+                            <!--/ko-->
+                            <!-- ko if:PaymentReceived()==null -->
+                            <td></td>
+                            <!--/ko-->
+                            <td data-bind="text: CheckNumber"></td>
+                            <td>
+                                <a href="#" class="inner-content-link blue text-deco" data-bind="click:$root.ViewPaymentLineItems">View&nbsp;</a>
+                                <!--ko if:CheckUploadName()!= null-->
+                                <span>|</span>
+                                <a href="#" class="inner-content-link blue text-deco" target="_blank" data-bind="attr: { href: CheckDownloadPath }">&nbsp;Check</a>
+                                <!--/ko-->
+                            </td>
+                        </tr>
+                        <!--/ko-->
+                        <!--/ko-->
+                    </tbody>
+                    <tfoot>
+                        <!--ko if:(PaymentDetails().length== 0)-->
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        &times;
+                                    </button>
+                                    No Result Found.
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                    </tfoot>
+                </table>
+                <nav class="margin-left">
+                    @Html.Partial("~/Views/Shared/_Paging.cshtml")
+                </nav>
+            </div><!-- white-background -->
+        </div><!-- col-sm-12 -->
+    </div>
+    <!-- /ko -->
+</div>

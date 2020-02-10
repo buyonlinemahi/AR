@@ -1,0 +1,97 @@
+﻿
+@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+
+@{
+    ViewBag.Title = "__Insurer";
+
+}
+
+<!--start row -->
+<div id="divInsurerSearchPartial">
+    <form>
+        <div class="panel-wrapper">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Search Insurer</div>
+                <div class="panel-body">
+                    <div class="col-md-2"><label> Name:</label> </div>
+                    <div class="col-md-10">
+                        <div class="form-group col-md-10">
+                            <input type="text" maxlength="50" name="searchText" id="SearchInsurerTitle" class="form-control" data-bind="jqBootstrapValidation: {}" placeholder="Search Insurer" required="required">
+                        </div>
+                         <button  class="btn btn-default text-right col-md-2" id="SearchInsurer" data-bind="click:$root.SearchInsurerByName">Search</button>
+                    </div>
+                </div>
+                <!--ko with:FileViewModel-->
+                <input type="hidden" name="Take" id="hidtakeIns" data-bind="value: $root.Take" />
+                <input type="hidden" name="Skip" id="hidskipIns" data-bind="value: $root.Skip" />
+                <!--/ko-->
+
+                <div class="row">
+                    <div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-12">
+                                <div class="white-background">
+
+                                    <table class="table table-bordered table-striped table-condensed home-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-sm-2">Insurer Name</th>
+                                                <th class="col-sm-2">Insurer Address</th>
+                                                <th class="col-sm-2">Insurer City</th>
+                                                <th class="col-sm-2">Insurer State</th>
+                                                <th class="col-sm-2">Insurer Zip</th>
+                                                <th class="col-sm-2">Insurer Phone</th>
+                                                <th class="col-sm-1">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!--ko if:InsurerArrResult!= null-->
+                                            <!-- ko foreach:InsurerArrResult -->
+                                            <tr>
+                                                <td class="col-sm-2"><span data-bind="text:InsurerName()" />
+                                                    <input type="hidden" name="InsurerID" id="InsurerID" data-bind="value:InsurerID()" />
+                                                    <input type="hidden" name="DBNameInsurer" id="DBNameInsurer" data-bind="value:DBNameInsurer()" /></td>
+                                                <td class="col-sm-2"><span data-bind="text:InsurerAddress" /></td>
+                                                <td class="col-sm-2"><span data-bind="text:InsurerCity" /></td>
+                                                <td class="col-sm-2"><span data-bind="text:InsurerStateName" /></td>
+                                                <td class="col-sm-2"><span data-bind="text:InsurerZip" /></td>
+                                                <td class="col-sm-2"><span data-bind="text:InsurerPhone" /></td>
+                                                <td class="col-sm-1"><a href="#" class="inner-content-link blue text-deco" data-bind="click:$root.SelectInsurerName">Select</a></td>
+                                            </tr>
+                                            <!--/ko-->
+                                            <!--/ko-->
+
+                                        </tbody>
+                                        <tfoot>
+                                            <!--ko if:(InsurerArrResult().length== 0)-->
+                                            <tr>
+                                                <td colspan="7">
+                                                    <div class="alert alert-info">
+                                                        <button type="button" class="close" data-dismiss="alert">
+                                                            &times;
+                                                        </button>
+                                                        No Result Found.
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!-- /ko -->
+                                        </tfoot>
+                                    </table>
+                                    <nav class="margin-left">
+                                        @Html.Partial("~/Views/Shared/_Paging.cshtml")
+                                    </nav>
+                                </div><!-- white-background -->
+                            </div><!-- col-sm-12 -->
+                        </div>
+
+
+                    </div>
+
+                </div>
+    </div>
+            </div>
+    </form>
+    <!-- row-end -->
+</div><!-- /inner-wrapper -->

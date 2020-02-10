@@ -1,0 +1,117 @@
+﻿@model LMGEDIApp.Domain.Models.Patient.PatientViewModel
+@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/Patient/PatientSearchViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="@Url.Content("~/Scripts/knockout/ko.pager.js")"></script>
+
+    <script src="js/main.js"></script>
+    <script type="text/javascript">
+        var patientModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model));
+        var _PatientSearchViewModel = new PatientSearchViewModel(patientModel);
+        ko.applyBindings(_PatientSearchViewModel, $("#divSearchPatient").get(0));
+
+    </script>
+
+}
+
+
+<div class="container-fluid" id="divSearchPatient">
+    <div class="row">
+        <!-- sidebar -->
+        <!-- header-bar -->
+
+        <div class="col-sm-12">
+
+
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="input-group search">
+                        <input type="text" id="PatientSearch" class="form-control" required name="PatientSearch.SearchText" placeholder="Search Patient Name" maxlength="40">
+                        <span class="input-group-btn">
+                            <button class="btn btn btn-default col-sm-12" type="submit" data-bind="click:$root.SearchPatientButton">Search</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+
+                <!-- col-sm-12 -->
+                <div class="col-sm-1">
+                    <button class="btn btn-default padding-btn color-black pull-right" type="button" onclick="location.href='@Url.Action(GlobalConst.Actions.PatientController.Add, GlobalConst.Controllers.Patient)'">Add New</button>
+                </div><!-- col-sm-2 -->
+                <div class="col-sm-1">
+                    <button class="btn btn-default padding-btn color-black col-sm-12" type="button" data-bind="click:$root.ResetPatientButton"> Cancel</button>
+                </div><!-- col-sm-2 -->
+                <!-- <div class="col-lg-12">
+                    <p class="padding-top-btm">Filter By:</p>
+                </div>-->
+            </div>  <!-- row -->
+            <!--ko with:PatientSearchViewModel-->
+            <input type="hidden" name="Take" id="hidtake" data-bind="value: $root.Take" />
+            <input type="hidden" name="Skip" id="hidskip" data-bind="value: $root.Skip" />
+            <input type="hidden" name="PatientSearchText" id="PatientSearchText" data-bind="value: $root.PatientSearchText" />
+            <!--/ko-->
+
+
+            <div class="clearfix"></div>
+
+
+            <!--ko if:(TotalItemCount() > 0 || TotalItemCount() == 0 )-->
+            <div class="row">
+                <div class="col-sm-12 margintop30">
+                    <div class="white-background">
+                        <table class="table table-bordered table-striped table-condensed home-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-4">Patient Name</th>
+                                    <th class="col-sm-4">Patient Claim</th>
+                                    <th class="col-sm-4">Patient Insurance </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--ko if:PatientSearchResult!= null-->
+                                <!-- ko foreach:PatientSearchResult -->
+                                <tr>
+                                    <td><span data-bind="text:PatientFirst() +' ' + PatientLast()" /></td>
+                                    <td> <a data-bind="attr: { href: '../Patient/Detail/'+PatientID(), title: PatientClaim},text : PatientClaim"></a></td>
+                                    <td><span data-bind="text :PatientInsurance" /></td>
+
+                                </tr>
+                                <!--/ko-->
+                                <!--/ko-->
+
+                            </tbody>
+                            <tfoot>
+                                <!--ko if:(PatientSearchResult().length== 0)-->
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="alert alert-info">
+                                            <button type="button" class="close" data-dismiss="alert">
+                                                &times;
+                                            </button>
+                                            No Result Found.
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- /ko -->
+                            </tfoot>
+                        </table>
+                        <nav class="margin-left">
+
+                            @Html.Partial("~/Views/Shared/_Paging.cshtml")
+                        </nav>
+                    </div><!-- white-background -->
+                </div><!-- col-sm-12 -->
+            </div>
+
+            <!-- /ko -->
+            <!--  row -->
+        </div><!-- col-sm-12 -->
+    </div><!-- main col-sm-9 -->
+</div><!--  row -->

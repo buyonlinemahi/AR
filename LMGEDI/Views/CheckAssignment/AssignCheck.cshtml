@@ -1,0 +1,199 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    ViewBag.Title = "AssignCheck";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{    
+<script src="~/Scripts/moneyformatt.js"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+<script src="~/Scripts/knockout/Custom/knockout.custom-extenders.js"></script>
+    <script src="~/Scripts/InputMaskViewModel.js"></script>
+    <script src="@Url.Content("~/Scripts/knockout/ko.pager.js")"></script>
+    <script src="~/Scripts/JQuery/jquery-migrate-1.0.0.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".datepicker").datepicker({ dateFormat: 'mm/dd/yy' });
+            $('.datepicker').mask('99/99/9999');
+            $('.phonemask').mask('999-999-9999');
+
+        });
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/CheckAssignment/AssignCheckSearchFileViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script type="text/javascript">
+        var assigncheckModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model));
+        var _AssignCheckSearchFileViewModel = new AssignCheckSearchFileViewModel();
+        _AssignCheckSearchFileViewModel.Init(assigncheckModel);
+        ko.applyBindings(_AssignCheckSearchFileViewModel, $("#AssignCheckInOCR").get(0));
+    </script>
+}
+<div id="AssignCheckInOCR">
+    <div class="row">
+        <div class="col-lg-12 client-accordian">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading11">
+                    <h4 class="panel-title">
+                        <span>
+                            Assign Check
+                        </span>
+                    </h4>
+                </div>
+                <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                    <div class="panel-body row">
+                        <div class="col-sm-12">
+                            <div id="divPDFViewer">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- col-lg-12 -->
+    </div><!-- row -->
+
+    <div class="row" id="assignNewFileDiv">
+        <div class="col-sm-12 ">
+            <div class="white-background">
+                <table class="table table-bordered table-striped table-condensed home-table">
+                    <thead>
+                        <tr>
+                            <th class="col-sm-4">Payment Date</th>
+                            <th class="col-sm-4">Check Number</th>
+                            <th class="col-sm-4">Check Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" id="aPaymentReceived" data-validation-regex-message="MM/DD/YYYY" class="width100  datepicker " name="PaymentReceived" /></td>
+                            <td><input class="width100" type="text" name="CheckNumber" id="aCheckNumber" maxlength="50" /></td>
+                            <td><input type="text" id="aCheckDate" data-validation-regex-message="MM/DD/YYYY" class="width100  datepicker " name="CheckDate" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered table-striped table-condensed home-table">
+                    <thead>
+                        <tr>
+                            <th class="col-sm-2">File Name</th>
+                            <th class="col-sm-3">Claim</th>
+                            <th class="col-sm-3">Invoice Number</th>
+                            <th class="col-sm-2">Balance</th>
+                            <th class="col-sm-2">Payment</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-sm-2"><a href="#" class="inner-content-link blue  text-deco" data-target="#myDivSearchFileModePopup" id="searchFile" data-backdrop="static" data-keyboard="false" data-toggle="modal">Search</a></td>
+                            <td class="col-sm-3">
+                                <input class="readyonly_backcolor" readonly="readonly" type="text" data-bind="value:ClaimNumber" id="aClaimNumber" />
+                                <input type="hidden" name="FileID" id="aFileID" data-bind="value:FileID" />
+                                <input type="hidden" name="FilesName" id="aFilesName" data-bind="value:FilesName" />
+                                <input type="hidden" name="InvoiceID" id="aInvoiceID" data-bind="value:InvoiceID" />
+                                
+                            </td>
+                            <td class="col-sm-3"><input type="text" class="width100" name="InvoiceNumber" id="aInvoiceNumber" data-bind="value:InvoiceNumber" readonly /></td>
+                            <td class="col-sm-2">
+                                <input type="text" id="aOutstandingBalance" class="width100" name="OutstandingBalance" data-bind="value:OutstandingBalance" readonly />
+                            </td>
+                            <td class="col-sm-2"><input class="width100" type="text" name="PaymentAmount" data-bind="value:PaymentAmount" id="aPaymentAmount" maxlength="10" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-default padding-btn margin-btm-30 pull-right" data-bind="click:$root.AddAssignedNewFile" type="button">Assign New File</button>
+            </div><!-- white-background -->
+        </div><!-- col-sm-12 -->
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div class="white-background">
+                <table class="table table-bordered table-striped table-condensed home-table">
+                    <thead>
+                        <tr>
+                            <th class="col-sm-3">File Name</th>
+                            <th class="col-sm-2">Claim</th>
+                            <th class="col-sm-3">Invoice Number</th>
+                            <th class="col-sm-2">Balance</th>
+                            <th class="col-sm-2">Payment</th>   
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--ko if:FileAssignedGridResult!=null-->
+                        <!-- ko foreach:FileAssignedGridResult -->
+                        <tr>
+                            <td class="col-sm-3">
+                                <span data-bind="text:FilesName"></span>
+                                <input type="hidden" name="FileID" id="FileID" data-bind="value:FileID()" />
+                                <input type="hidden" name="FilesName" id="FilesName" data-bind="value:FilesName()" />
+                                <input type="hidden" name="InvoiceID" id="InvoiceID" data-bind="value:InvoiceID()" />
+                                <input type="hidden" name="InvoiceNumber" id="InvoiceNumber" data-bind="value:InvoiceNumber()" />
+                            </td>
+                            <td class="col-sm-2"><span data-bind="text:ClaimNumber"></span></td>
+                            <td class="col-sm-3"><span data-bind="text:InvoiceNumber"></span></td>
+                            <td class="col-sm-2"><span data-bind="text:'$'+formatMoney(parseFloat(OutstandingBalance()).toFixed(2))"></span></td>    
+                            <td class="col-sm-2"><span data-bind="text:'$'+formatMoney(parseFloat(PaymentAmount()).toFixed(2))"></span></td>    
+                        </tr>                      
+                        <!--/ko-->
+                        <!--/ko-->
+                        <!--ko ifnot:FileAssignedGridResult()==null || FileAssignedGridResult().length==0-->
+                        <tr>
+                            <td colspan="4" align="right"><span>Total</span></td>
+                            <td colspan="1"><span data-bind="text:'$'+formatMoney(parseFloat(TotalPaymentAmount()).toFixed(2))"></span></td>
+                        </tr>
+                        <!--/ko-->
+                    </tbody>
+                    <tfoot>
+                        <!--ko if:FileAssignedGridResult()==null || FileAssignedGridResult().length==0-->
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        &times;
+                                    </button>
+                                    No Result Found.
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                    </tfoot>
+                </table>
+                <nav class="margin-left">
+
+                </nav>
+                <button class="btn btn-default padding-btn margin-btm-30 pull-right margintop30" data-bind="click:$root.SaveFileAssignedGrid" type="button">Save</button>
+            </div><!-- white-background -->
+        </div><!-- col-sm-12 -->
+    </div>
+
+    <div class="modal fade" id="myDivSearchFileModePopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-center popwidthadj">
+            <div class="modal-content" style="top: 550px;left: 160px; height: 374px;">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" id="CloseSearchFileModelPopUp" data-dismiss="modal" aria-hidden="true" data-bind="click:$root.closeSearchPopUp">&times;</button>
+
+                    <h4 class="modal-title">Search File</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="panel-body">
+                        @{ Html.RenderPartial("~/Views/Shared/CheckAssign/_SearchFile.cshtml");  }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    #alertify-cancel {
+        display: none !important;
+    }
+    .modal-backdrop
+{
+    opacity:0.08 !important;
+}
+</style>

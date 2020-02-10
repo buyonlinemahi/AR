@@ -1,0 +1,153 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    Layout = null;
+}
+<div id="divInvoiceDetail">
+    <div class="row">
+        <div class="col-sm-12 margintop30">
+            <input type="hidden" id="hidClaimNumber" value="@Request.QueryString["C"]" />
+            <input type="hidden" id="hidDatabase" value="@Request.QueryString["D"]" />
+            <!--ko with:FileViewModel-->
+            <input type="hidden" name="Take" id="hidInvoicetake" data-bind="value: $root.iTake" />
+            <input type="hidden" name="Skip" id="hidInvoiceskip" data-bind="value: $root.iSkip" />
+            <!--/ko-->
+            <div class="white-background">
+                <table class="table table-bordered table-striped table-condensed home-table">
+                    <thead>
+                        <tr>
+                            <th>Invoice</th>
+                            <th>Amount</th>
+                            <!--ko if:(DepartmentId() != 5)-->
+                            <th>Invoice Date</th>
+                            <!--/ko-->
+                            <!--ko if:(DepartmentId() == 5)-->
+                            <th>Date</th>
+                            <!--/ko-->
+                            <th>Due Date</th>
+                            <th>Balance</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--ko if:InvoiceDetails!= null-->
+                        <!-- ko foreach:InvoiceDetails -->
+                        <tr>
+                            <td data-bind="text:InvoiceNumber"></td>
+                            <td data-bind="text:'$'+formatMoney(InvoiceAmt().toFixed(2))"></td>
+                            <td data-bind="text: moment(InvoiceDate()).format('L')"></td>            
+                            <!--ko if: InvoiceDueDate() != null-->
+                            <td data-bind="text: moment(InvoiceDueDate()).format('L')"></td>                  
+                            <!--/ko-->
+                            <!--ko if: InvoiceDueDate() == null-->
+                            <td></td>
+                            <!--/ko-->
+                            <td data-bind="text:'$'+InvoiceBalanceAmt().toFixed(2)"></td>
+                            <td>                                
+                                <input type="hidden" data-bind="value: BillingWeek()" />
+                                <a href="#" class="inner-content-link blue text-deco" data-target="#myDivInvoicePartialFile" id="InvoicePopUp" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-bind="click:$root.ViewInvoiceDetailsByID">View&nbsp;</a>
+                                <span>|</span>  
+                                <a href="#" class="inner-content-link blue text-deco" data-target="#PaymentModal" id="PaymentPopUp" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-bind="click:$root.ViewPaymentDetails">&nbsp;Payment</a>
+                                <span>|</span> 
+                                <a href="#" class="inner-content-link blue text-deco" data-target="#PaymentRefundModal" id="PaymentRefund" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-bind="click:$root.ViewPaymentRefundDetails">&nbsp;Refund</a>
+                            </td>
+                        </tr>
+                        <!--/ko-->
+                        <!--/ko-->
+                    </tbody>
+                    <tfoot>
+                        <!--ko if:(InvoiceDetails().length== 0)-->
+                        <tr>
+                            <td colspan="6">
+                                <div class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        &times;
+                                    </button>
+                                    No Result Found.
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                    </tfoot>
+                </table>
+                <nav class="margin-left">
+
+                    @*<!-- ko ifnot:iPager().iTotalItemCount() > 0 -->
+                        <p>
+                            No Record found
+                        </p>
+                        <!-- /ko -->*@
+                    <!-- ko if:iPager().iTotalItemCount() > 0 -->
+                    <div class="pagination" data-bind="with: iPager">
+                        <div class="pagexofx">
+                            <span data-bind="text:iFirstItemIndex"></span>
+                            -
+                            <span data-bind="text: iLastItemIndex"></span>
+                            of
+                            <strong>
+                                <span data-bind="text: iTotalItemCount"></span>
+                            </strong>
+                            total results.
+                        </div>
+                        <ul class="pagination">
+                            <!-- ko if:iCurrentPage() === 1 -->
+                            <li class="disabled">
+                                <a href="#" class="disabledPage">&laquo;&laquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko ifnot:iCurrentPage() === 1 -->
+                            <li>
+                                <a href="#" data-bind="click: function(){ iCurrentPage(1); }">&laquo;&laquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko if:iHasPrevPage -->
+                            <li>
+                                <a href="#" data-bind="click: function(){ iCurrentPage(iCurrentPage() - 1); }">&laquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko ifnot:iHasPrevPage -->
+                            <li class="disabled">
+                                <a href="#" class="disabledPage">&laquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko foreach:iPages -->
+                            <!-- ko if:$data === $parent.iCurrentPage() -->
+                            <li class="active">
+                                <span class="currentPage" data-bind="text: $data"></span>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko if:$data !== $parent.iCurrentPage() -->
+                            <li>
+                                <a href="#" data-bind="text: $data, click: function(){ $parent.iCurrentPage($data); }"></a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- /ko -->
+                            <!-- ko if:iHasNextPage -->
+                            <li>
+                                <a href="#" data-bind="click: function(){ iCurrentPage(iCurrentPage() + 1); }">&raquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko ifnot:iHasNextPage -->
+                            <li class="disabled">
+                                <a href="#" class="disabledPage">&raquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko ifnot:iCurrentPage() === iLastPage() -->
+                            <li>
+                                <a href="#" data-bind="click: function(){ iCurrentPage(iLastPage()); }">&raquo;&raquo;</a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- ko if:iCurrentPage() === iLastPage() -->
+                            <li class="disabled">
+                                <a href="#" class="disabledPage">&raquo;&raquo;</a>
+                            </li>
+                            <!-- /ko -->
+                        </ul>
+
+                    </div>
+                    <!-- /ko -->
+                </nav>
+            </div><!-- white-background -->
+        </div><!-- col-sm-12 -->
+    </div>
+</div>

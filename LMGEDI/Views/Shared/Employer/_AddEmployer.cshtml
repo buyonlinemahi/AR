@@ -1,0 +1,37 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+
+@{
+    ViewBag.Title = "__AddEmployer";
+
+}
+
+<!--start row -->
+<div id="divEmployerAddPartial">
+    @using (Html.BeginForm(GlobalConst.Actions.FileController.AddEmployer, GlobalConst.Controllers.File, System.Web.Mvc.FormMethod.Post, new
+{
+    id = "frmAddEmployer",
+    enctype = "multipart/form-data",
+    data_bind = "ajaxForm : { success : function(responseText ,statusText,xhr,$form){AddEmployerName(responseText);},beforeSubmit : EmployerInfoFormBeforeSubmit }"
+}))
+    {
+        <div class="panel-wrapper">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Add Employer </div>
+                <div class="panel-body">
+                    <div class="col-md-2"><label> Name:</label></div>
+                    <div class="col-md-10">
+                        <div class="form-group col-md-10">
+                            <input autocomplete="off" maxlength="50" type="text" name="EmployerName" id="EmployerNameAdd" class="form-control" data-bind="jqBootstrapValidation: {}" placeholder="Add Employer" required="required">
+                        </div>
+                        <button class="btn btn-default padding-btn color-black pull-right margin-btm-30" type="submit">Save</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    }
+    <!-- row-end -->
+</div><!-- /inner-wrapper -->
+

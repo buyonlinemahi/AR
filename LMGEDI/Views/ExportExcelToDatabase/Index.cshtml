@@ -1,0 +1,160 @@
+﻿@model LMGEDIApp.Domain.Models.ExcelUploadDomain.ExcelDropDownList
+@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/ExcelUpload/ExcelUploadViewModel.js")"></script>   
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script type="text/javascript">
+        var _excelModel = new ExcelUploadViewModel();
+        ko.applyBindings(_excelModel, $("#divExcelUpload").get(0));
+    </script>
+
+}
+
+<div class="container-fluid" id="divExcelUpload">
+    <div class="row">
+        <div class="checkout-wrap" style="margin-bottom:200px;">
+            <ul class="checkout-bar green-bar">
+                <li id="UploadLinkCompleted" class="previous visited">Upload</li>
+                <li id="MappingLinkCompleted" class="previous visited">Mapping</li>
+                <li id="ImportLinkCompleted" class="previous visited">Import</li>
+                <li id="VerifyLinkCompleted" class="previous visited">Verify</li>
+            </ul>
+        </div>
+        <input class="loader" type="image" id="ImgSourceLoading" src="~/Content/img/loading.gif" />   
+        <div id="loaderDiv">
+            <input class="loader" width="40%" type="image" id="ImgSourceLoading" src="~/Content/img/loading.gif">
+        </div> 
+        <div class="col-lg-12 client-accordian">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading11">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse11" aria-expanded="true" aria-controls="collapse11">
+                            Export Excel To Database
+                        </a>
+                        
+                    </h4>
+                </div>
+                <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                    <div class="panel-body row">
+                        <div class="col-sm-12">
+                            @using (Html.BeginForm(GlobalConst.Actions.ExportExcelToDatabaeController.Index, GlobalConst.Controllers.ExportExcelToDatabase, FormMethod.Post, new
+                                   {
+                                       id = "ExcelUploadForm",
+                                       enctype = "multipart/form-data",
+                                       data_bind = "ajaxForm:{ success: function(responseText, statusText, xhr, $form){ UploadExcelButton(responseText, statusText, xhr, $form); }}"
+                                   }))
+                                {
+                                <div class="col-sm-12 label-font paddingleft0 paddingright0" id="divRadioButtonList">
+                                    <div class="col-sm-4">
+                                        <div class="form-group row label-font clearfix">
+
+
+                                            <label class="col-sm-5 control-label" for="Excel"> <input type="radio" id="rdoPatientInfo" name="rdoValue" value="0" />Patient Table :</label>
+                                            
+                                            <label class="col-sm-5 control-label pull-right" for="Excel"><input type="radio" id="rdoPatientBilling" name="rdoValue" value="1" />Patient Billing Table:</label>
+                                           
+                                        </div>
+                                       
+                                    </div><!-- col-sm-2 -->
+                                    <div class="col-sm-3 col-sm-offset-1 " id="DivUploadExcel">
+                                        <div class="form-group row">
+                                            <label for="exampleInputFile" class="col-sm-4 control-label ">File input</label>
+                                            <div class="col-sm-7 pull-left">
+                                                <input type="file" name="uploadFile" id="uploadFile" required="required" class="" data-bind="jqBootstrapValidation:{}" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                                       data-validation-regex-regex="([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx)$" data-validation-regex-message="Excel File Only" />
+                                            </div>
+
+                                        </div>
+                                    </div><!-- col-sm-2 -->
+                                    <div class="col-sm-3 pull-right paddingright0">
+                                        <button class="btn btn-default padding-btn margin-btm-30 pull-right" type="submit" id="btnUpload">Upload</button>
+                                        
+                                    </div>
+                                </div><!-- row -->
+                            }
+                            
+                        </div>
+                        <div class="col-sm-12" id="DivDropDownListShow">
+                            <div class="row label-font">
+                                <div class="col-sm-4">
+                                    <div class="form-group row clearfix">
+                                        <label for="inputEmail3" class="col-sm-3 control-label">Excel Header :</label>
+                                        <div class="col-sm-9">
+                                          
+                                            <select class="form-control" id="excelDropDownExcelHeaderName" name="excelDropDownList.ExcelHeaderDetails.ExcelHeaderName" required="required" data-bind="options:ExcelHeaderDrop, optionsText:'ExcelHeaderName', optionsValue: 'ExcelHeaderName', value: selectedItemHeader,jqBootstrapValidation:{}"></select>
+                                        </div>
+                                    </div>
+                                </div><!-- col-sm-2 -->
+                                <div class="col-sm-4 col-sm-offset-1">
+                                    <div class="form-group row clearfix">
+                                        <label for="inputEmail3" class="col-sm-3 control-label">Table Header :</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="excelDropDownColumnName" name="excelDropDownList.TempExcelDataColumnsDetails.ColumnName" required="required" data-bind="options:TempExcelDataDrop, optionsText:'ColumnName', optionsValue: 'ColumnName', value: selectedItemTempExcel,jqBootstrapValidation:{}"></select>
+                                        </div>
+                                    </div>
+                                </div><!-- col-sm-2 -->
+                                <div class="col-sm-3">
+                                    <button class="btn btn-default padding-btn margin-btm-30 pull-right" type="button" data-bind="click: $root.MergeExcelDataheader" id="MergeSubmit">Map</button>
+                                </div>
+                            </div><!-- row -->
+                        </div>
+                    </div>
+                </div>
+                <div id="DivMappingGrid">
+                    <table class="col-sm-12 margintop30 table table-bordered table-striped table-condensed home-table">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-4">Excel Header</th>
+                                <th class="col-sm-4">Table Header</th>
+                                <th class="col-sm-4">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--ko if:ExcelDatabaseHeaders!= null-->
+                            <!-- ko foreach:ExcelDatabaseHeaders -->
+                            <tr>
+                                <td>
+                                    <span data-bind="text:ExcelHeaderName" />
+                                    <input type="hidden" data-bind="attr: { name: 'ExcelHeaderDetails['+ $index() + '\].ExcelHeaderName' },value:ExcelHeaderName" />
+                                    <input type="hidden" data-bind="attr: { name: 'TempExcelDataColumnsDetails['+ $index() + '\].ColumnName' },value:ColumnName" />
+
+                                </td>
+                                <td>
+                                    <span data-bind="text:ColumnName" />
+
+                                </td>
+                                <td> <a data-bind="click:$root.DeleteDataFromGrid"<span>Delete</span></a></td>
+
+
+                            </tr>
+
+                            <!--/ko-->
+                            <!--/ko-->
+
+                        </tbody>
+
+                    </table>
+                    <nav class="margin-left">
+
+
+                    </nav>
+                    <button class="btn btn-default padding-btn margin-btm-30 pull-right" type="button" id="VerifySubmit" data-bind="click:$root.ReplaceDuplicateValueFromTemp">Verify</button>
+                    <button class="btn btn-default padding-btn margin-btm-30 pull-right" type="button" id="MergeSubmit" data-bind="click:$root.VerifyExcelDataheader">Import</button>
+                    
+                </div><!-- col-sm-12 -->
+
+
+            </div>
+
+        </div><!-- col-lg-12 -->
+
+    </div><!-- row -->
+</div><!--  row -->

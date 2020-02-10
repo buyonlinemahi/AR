@@ -1,0 +1,91 @@
+﻿
+@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+
+@{
+    ViewBag.Title = "__AddAdjuster";
+
+}
+
+<!--start row -->
+<div id="divAdjusterAddPartial">
+    
+@using (Html.BeginForm(GlobalConst.Actions.FileController.AddAdjuster, GlobalConst.Controllers.File, System.Web.Mvc.FormMethod.Post, new
+{
+    id = "frmAddAdjuster",
+    enctype = "multipart/form-data",
+    data_bind = "ajaxForm : { success : function(responseText ,statusText,xhr,$form){AddAdjusterName(responseText);},beforeSubmit : AdjusterInfoFormBeforeSubmit}"
+}))
+    {
+        <div class="row">
+            <div class="col-lg-12 client-accordian">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading11">
+                        <h4 class="panel-title">
+                            
+                                Add New Adjuster
+                         
+                        </h4>
+                    </div>
+                    <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                        <div class="panel-body row">
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">First Name :</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" autocomplete="off" maxlength="50" class="form-control" required="required" data-bind="jqBootstrapValidation: {}" name="AdjusterFirstName" id="AdjusterFirstName">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Last Name :</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" autocomplete="off" maxlength="50" class="form-control" required="required" data-bind="jqBootstrapValidation: {}" name="AdjusterLastName" id="AdjusterLastName">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Phone:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" autocomplete="off" maxlength="12" class="form-control phonemask" required="required" name="AdjusterPhone" id="AdjusterPhone" data-bind="jqBootstrapValidation: {} ">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Fax:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" autocomplete="off" maxlength="12" class="form-control phonemask" required="required" data-bind="jqBootstrapValidation: {} " name="AdjusterFax" id="AdjusterFax">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label class="col-sm-3 control-label">Email :</label>
+                                    <div class="col-sm-7">
+                                        <input type="email" autocomplete="off" class="form-control" maxlength="50" required="required" name="AdjusterEmail" id="AdjusterEmail">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- col-lg-12 -->
+        </div>
+        <div class="row">
+        <div class="col-sm-12">
+
+            @*<button class="btn btn-default padding-btn color-black pull-right margin-left-20 margin-btm-30" type="button" data-bind="click:$root.AdjusterCancel">Cancel</button>*@
+            <button class="btn btn-default padding-btn color-black pull-right margin-btm-30" type="submit">Save</button>
+
+        </div>
+    </div>
+
+    }
+    
+    <!-- row-end -->
+</div><!-- /inner-wrapper -->

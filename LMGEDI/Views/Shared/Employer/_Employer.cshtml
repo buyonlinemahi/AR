@@ -1,0 +1,98 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+
+@{
+    ViewBag.Title = "__Employer";
+
+}
+
+<!--start row -->
+<div id="divEmployerSearchPartial">
+    <form>
+        <div class="panel-wrapper">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Search Employer </div>
+                <div class="panel-body">
+                    <div class="col-md-2"><label> Name:</label> </div>
+                    <div class="col-md-10">
+                        <div class="form-group col-md-10">
+                            <input type="text" name="searchText" maxlength="50" id="SearchEmployerTitle" class="form-control" data-bind="jqBootstrapValidation: {}" placeholder="Search Employer" required="required">
+                        </div>
+                        <button href="#" class="btn btn-default text-right col-md-2" id="SearchEmployer" data-bind="click:$root.SearchEmployerByName" type="submit">Search</button>
+                    </div>
+                </div>
+                <!--ko with:FileViewModel-->
+                <input type="hidden" name="Take" id="hidtakeEmp" data-bind="value: $root.Take" />
+                <input type="hidden" name="Skip" id="hidskipEmp" data-bind="value: $root.Skip" />
+                <!--/ko-->
+
+                <div class="row">
+                    <div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-12">
+                                <div class="white-background">
+
+                                    <table class="table table-bordered table-striped table-condensed home-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-sm-2">Employer Name</th>
+                                                <th class="col-sm-2">Employer Address</th>
+                                                <th class="col-sm-2">Employer City</th>
+                                                <th class="col-sm-2">Employer State</th>
+                                                <th class="col-sm-2">Employer Zip</th>
+                                                <th class="col-sm-2">Employer Phone</th>
+                                                <th class="col-sm-1">Action</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!--ko if:EmployerArrResult!= null-->
+                                            <!-- ko foreach:EmployerArrResult -->
+                                            <tr>
+                                                <td class="col-sm-2">
+                                                    <span data-bind="text:EmployerName()" />
+                                                    <input type="hidden" name="EmployerId" id="EmployerId" data-bind="value:EmployerId()" />
+                                                </td>
+                                                <td class="col-sm-2"><span data-bind="text:EmployerAddress" /></td>
+                                                <td class="col-sm-2"><span data-bind="text:EmployerCity" /></td>
+                                                <td class="col-sm-2"><span data-bind="text:EmployerStateName" /></td>
+                                                <td class="col-sm-2"><span data-bind="text:EmployerZip" /></td>
+                                                <td class="col-sm-2"><span data-bind="text:EmployerPhone" /></td>
+                                                <td class="col-md-1"><a href="#" class="inner-content-link blue  text-deco" data-bind="click:$root.SelectEmployerName">Select</a></td>
+                                            </tr>
+                                            <!--/ko-->
+                                            <!--/ko-->
+
+                                        </tbody>
+                                        <tfoot>
+                                            <!--ko if:(EmployerArrResult().length== 0)-->
+                                            <tr>
+                                                <td colspan="7">
+                                                    <div class="alert alert-info">
+                                                        <button type="button" class="close" data-dismiss="alert">
+                                                            &times;
+                                                        </button>
+                                                        No Result Found.
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!-- /ko -->
+                                        </tfoot>
+                                    </table>
+                                    <nav class="margin-left">                                        
+                                        @Html.Partial("~/Views/Shared/_Paging.cshtml")
+                                    </nav>
+                                </div><!-- white-background -->
+                            </div><!-- col-sm-12 -->
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- row-end -->
+</div><!-- /inner-wrapper -->

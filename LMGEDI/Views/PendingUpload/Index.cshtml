@@ -1,0 +1,105 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    ViewBag.Title = "Panding Uploads";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/PendingUpload/PendingUploadViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="@Url.Content("~/Scripts/knockout/ko.pager.js")"></script>
+
+    <script src="js/main.js"></script>
+    <script type="text/javascript">
+        var pendingUploadModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model));
+        var _PendingUploadViewModel = new PendingUploadViewModel(pendingUploadModel);
+        ko.applyBindings(_PendingUploadViewModel, $("#divPendingUpload").get(0));
+
+    </script>
+
+}
+<div class="container-fluid" id="divPendingUpload">
+
+    <div class="col-lg-12 client-accordian">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading11">
+                <h4 class="panel-title">
+                    <span aria-expanded="true" aria-controls="collapse11">
+                      Pending Upload(s)
+                    </span>
+                </h4>
+            </div>
+            <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+
+
+
+                <div class="row">
+                    <div id="loaderDiv">
+                        <input class="loader1 display-none" type="image" id="ImgSourceLoading" src="~/Content/img/loading.gif">
+                    </div>
+                    <div class="col-sm-12 margintop5">
+                        <div class="white-background">
+                            <table class="table table-bordered table-striped table-condensed home-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sheet Name</th>
+                                        <th>Upload Date</th>
+                                        <th>User </th>
+                                        <th>Action </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @*                       <!--ko with:PendingUploadViewModel-->*@
+                                    <input type="hidden" name="Skip" id="hidskip" data-bind="value:$root.Skip" />
+                                    @*                     <!--/ko-->*@
+
+                                    <!--ko if:PendingUploads!= null-->
+                                    <!-- ko foreach:PendingUploads -->
+                                    <tr>
+                                        <td data-bind="text:PendingUploadName"></td>
+                                        <td data-bind="text:moment(PendingUploadDate()).format('L')">   </td>
+                                        <td data-bind="text:Username"></td>
+
+                                        <td>
+                                            <input type="hidden" data-bind="value:DepartmentId" />
+                                            <a class="inner-content-link blue text-deco" href="" data-bind="click:$root.updatePandingUploadByID">Delete&nbsp;</a>
+                                            <span>|</span>
+                                            <a class="inner-content-link blue text-deco" href="" data-bind="click:$root.MoveToDataBase">&nbsp;Move</a>
+                                        </td>
+
+                                    </tr>
+                                    <!--/ko-->
+                                    <!--/ko-->
+                                    <!--ko if:(PendingUploads().length== 0)-->
+                                    <tr>
+                                        <td colspan="4">
+                                            <div class="alert alert-info">
+                                                <button type="button" class="close" data-dismiss="alert">
+                                                    &times;
+                                                </button>
+                                                No Result Found.
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!--/ko-->
+                                </tbody>
+                            </table>
+                            <nav class="margin-left">
+                                @Html.Partial("~/Views/Shared/_Paging.cshtml")
+                            </nav>
+                        </div><!-- white-background -->
+                    </div><!-- col-sm-12 -->
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    </div>
+
+    

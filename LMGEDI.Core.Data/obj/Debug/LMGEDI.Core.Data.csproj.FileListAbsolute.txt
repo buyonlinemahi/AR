@@ -1,0 +1,11 @@
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data\bin\Debug\LMGEDI.Core.Data.dll
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data\bin\Debug\LMGEDI.Core.Data.pdb
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data\bin\Debug\Core.Base.Data.dll
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data\bin\Debug\LMGEDI.Core.Data.Model.dll
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data\bin\Debug\EntityFramework.dll
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data\bin\Debug\Core.Base.Data.pdb
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data\bin\Debug\LMGEDI.Core.Data.Model.pdb
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data\bin\Debug\EntityFramework.xml
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data\obj\Debug\LMGEDI.Core.Data.csprojResolveAssemblyReference.cache
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data\obj\Debug\LMGEDI.Core.Data.dll
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data\obj\Debug\LMGEDI.Core.Data.pdb

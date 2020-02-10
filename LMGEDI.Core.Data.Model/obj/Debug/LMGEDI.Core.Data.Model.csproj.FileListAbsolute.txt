@@ -1,0 +1,5 @@
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data.Model\bin\Debug\LMGEDI.Core.Data.Model.dll
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data.Model\bin\Debug\LMGEDI.Core.Data.Model.pdb
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data.Model\obj\Debug\LMGEDI.Core.Data.Model.csprojResolveAssemblyReference.cache
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data.Model\obj\Debug\LMGEDI.Core.Data.Model.dll
+D:\Mahi_TFS\LMG\LMGEDI.Core.Data.Model\obj\Debug\LMGEDI.Core.Data.Model.pdb

@@ -1,0 +1,132 @@
+.panel-primary > .panel-heading {
+color: #626262;
+background-color: #d8e7fa;
+border-color: #428bca;
+}
+
+.panel-title {
+margin-top: 20px;
+margin-bottom: 20px;
+font-size: 16px;
+font-family:Open Sans, Helvetica-CE, Arial;
+}
+
+.panel-primary {
+border:3px solid #3d5464;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+color: #ffffff;
+background-color: #22333d;
+border-color: #405767;
+}
+
+.btn-primary {
+color: #ffffff;
+background-color: #405767;
+border-color: #22333d;
+}
+
+.panel > .list-group .list-group-item {
+border:none;
+background: none;
+color:#fefefe;
+line-height:2em;
+}
+
+.panel > .list-group .list-group-item i {
+margin-right:10px;
+}
+
+.panel > .list-group .subitem .list-group-item {
+color:#d5d5d5;
+}
+
+.panel > .list-group .list-group-item:hover {
+background: #18252C;
+}
+
+.panel > .list-group .subitem .list-group-item:hover {
+background: #22343e;
+}
+
+
+
+.nav {
+width: 50px;
+line-height:2.8em;
+height:100%;
+background: #121b22;
+}
+
+h2 {
+margin-top: 15px;
+margin-bottom: 20px;
+text-align: center;
+}
+
+.nav > li > a {
+position: relative;
+display: block;
+padding: 20px 15px;
+}
+
+.nav > li.last {
+position: absolute;
+width:50px;
+display: block;
+bottom:0px;
+background:#14171D;
+}
+
+.list-group {
+margin-bottom: 0;
+}
+
+.list-group .subitem {
+	text-indent:30px;
+}
+
+.navbar {
+border-radius: 0px;
+}
+
+.navbar-text {
+margin-top: 10px;
+margin-bottom: 10px;
+}
+
+.navbar-brand {
+font-size: 34px;
+}
+
+.panel-default > .panel-heading {
+color: #fefefe;
+background-color: #121b22;
+border-color: #dddddd;
+}
+
+.navbar-default {
+background-color: #d8e7fa;
+border-color: #428bca;
+border-right: none;
+border-left: none;
+border-top: none;
+}
+
+.btn-default {
+color: #fefefe;
+background-color: #121b22;
+border-color: #cccccc;
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+color: #fefefe;
+background-color: #293b47;
+border-color: #adadad;
+}
+
+.input-group-addon:first-child {
+border-right: 0;
+background: #121b22;
+}

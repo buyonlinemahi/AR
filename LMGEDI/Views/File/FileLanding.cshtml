@@ -1,0 +1,116 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    ViewBag.Title = "FileLanding";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/File/FileLandingViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="@Url.Content("~/Scripts/knockout/ko.pager.js")"></script>
+
+    <script src="js/main.js"></script>
+    <script type="text/javascript">
+        var fileModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model));
+        var _FilelandingViewModel = new FilelandingViewModel(fileModel);
+        ko.applyBindings(_FilelandingViewModel, $("#divSearchFile").get(0));
+    </script>
+
+}
+
+<div class="container-fluid" id="divSearchFile">
+
+    <div class="row">
+        <!-- sidebar -->
+        <!-- header-bar -->
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="input-group search">
+                        <input type="text" id="FileSearch" autocomplete="off" class="form-control" required name="FileSearch.SearchText" placeholder="Search with First Name / Last Name / Claim Number / Invoice Number" maxlength="100">
+                        <span class="input-group-btn">
+                            <button id="btnSearchFile" class="btn btn btn-default col-sm-12" type="submit" data-bind="click:$root.SearchFileButton">Search</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+                <!-- col-sm-12 -->
+                <div class="col-sm-1">
+                    <a href="/File/Index/0" class="btn btn-default padding-btn color-black pull-right">Add New</a>
+                </div><!-- col-sm-2 -->
+                <div class="col-sm-1">
+                    <button class="btn btn-default padding-btn color-black col-sm-12" type="button" data-bind="click:$root.ResetFileButton"> Cancel</button>
+                    @if (ViewBag.SearchText != null)
+                    {
+                        <input type="hidden" id="txtDashBoard" value="@ViewBag.SearchText" />
+                        <script type="text/javascript">
+                            document.getElementById('FileSearch').value = document.getElementById('txtDashBoard').value;
+                        </script>
+                    }
+
+                </div><!-- col-sm-2 -->
+                <!-- <div class="col-lg-12">
+                    <p class="padding-top-btm">Filter By:</p>
+                </div>-->
+            </div>  <!-- row -->
+            @*      <!--ko with:FilelandingViewModel-->*@
+            <input type="hidden" name="Take" id="hidtake" data-bind="value: $root.Take" />
+            <input type="hidden" name="Skip" id="hidskip" data-bind="value: $root.Skip" />
+            <input type="hidden" name="FileSearchText" id="FileSearchText" data-bind="value: $root.FileText" />
+            @*    <!--/ko-->*@
+            <div class="clearfix"></div>
+            <!--ko if:(TotalItemCount() > 0 || TotalItemCount() == 0 )-->
+            <div class="row">
+                <div class="col-sm-12 margintop30">
+                    <div class="white-background">
+                        <table class="table table-bordered table-striped table-condensed home-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-2">File Name</th>
+                                    <th class="col-sm-2">Claim Number</th>
+                                    <th class="col-sm-2">Insurer</th>
+                                    <th class="col-sm-2">Branch</th>
+                                    <th class="col-sm-2">Employer</th>
+                                    @*<th class="col-sm-2">Invoice Number</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--ko if:FileSearchResult()!= null-->
+                                <!-- ko foreach:FileSearchResult -->
+                                <tr>
+                                    <td><a class="inner-content-link blue text-deco" data-bind="attr: {'href': '@Url.Action("Index", "File/Index")/' + FileID()}"><span data-bind="text:(FirstName() + ' ' + LastName())" /></a></td>                                    
+                                    <td><span data-bind="text:ClaimNumber" /></td>
+                                    <td><span data-bind="text :InsurerName" /></td>
+                                    <td><span data-bind="text:InsurerBranchName" /></td>
+                                    <td><span data-bind="text :EmployerName" /></td>
+                                    @*<td><span data-bind="text:InvoiceNumber" /></td>*@
+                                </tr>
+                                <!--/ko-->
+                                <!--/ko-->
+                            </tbody>
+                            <tfoot>
+                                <!--ko if:FileSearchResult()==null || FileSearchResult().length==0-->
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="alert alert-info">
+                                            <button type="button" class="close" data-dismiss="alert">
+                                                &times;
+                                            </button>
+                                            No Result Found.
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- /ko -->
+                            </tfoot>
+                        </table>
+                        <nav class="margin-left">
+                            @Html.Partial("~/Views/Shared/_Paging.cshtml")
+                        </nav>
+                    </div><!-- white-background -->
+                </div><!-- col-sm-12 -->
+            </div>
+            <!-- /ko -->
+            <!--  row -->
+        </div><!-- col-sm-12 -->
+    </div><!-- main col-sm-9 -->
+</div><!--  row -->

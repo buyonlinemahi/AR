@@ -1,0 +1,94 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/User/UserAddViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script type="text/javascript">
+        var userModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model));
+        var _userViewModel = new UserAddViewModel(userModel);
+        ko.applyBindings(_userViewModel, $("#divUser").get(0));
+    </script>
+}
+<div id="divUser">
+    @using (Html.BeginForm(GlobalConst.Actions.UserController.Add, GlobalConst.Controllers.User, System.Web.Mvc.FormMethod.Post, new
+{
+    id = "frmUser",
+    enctype = "multipart/form-data",
+    data_bind = "ajaxForm : { success : function(responseText ,statusText,xhr,$form){AddUserSuccess(responseText);},beforeSubmit : UserInfoFormBeforeSubmit, clearForm: true}"
+}))
+    {
+        <div class="row">
+            <div class="col-lg-12 client-accordian">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading11">
+                        <h4 class="panel-title">
+                            
+                                User Requirements
+                          
+                        </h4>
+                    </div>
+                    <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                        <div class="panel-body row">
+                            @*<div class="col-sm-6">
+                                    <div class="form-group row label-font clearfix">
+                                        <label for="inputEmail3" class="col-sm-3 control-label">User First Name :</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" required data-bind="jqBootstrapValidation: {}" class="form-control" name="FirstName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group row label-font clearfix">
+                                        <label for="inputEmail3" class="col-sm-3 control-label">User Last Name :</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" required data-bind="jqBootstrapValidation: {}" class="form-control" name="LastName">
+                                        </div>
+                                    </div>
+                                </div>*@
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label class="col-sm-3 control-label">User Login :</label>
+                                    <div class="col-sm-9">
+                                        <input placeholder="UserName" autocomplete="off" type="text" required="required" data-bind="jqBootstrapValidation: {}" class="form-control" maxlength="50" name="Username">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label  class="col-sm-3 control-label">User Password :</label>
+                                    <div class="col-sm-9">
+                                        <input placeholder="Password" type="password" maxlength="70" required="required" data-bind="jqBootstrapValidation: {}" class="form-control" name="Password">
+                                        <input placeholder="Password" style="display:none" type="password" value="hghgh" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label  class="col-sm-3 control-label">User Status :</label>
+                                    <div class="col-sm-9">
+                                        <select id="UserStatus" name="IsActive" class="form-control" required="required" data-bind="options: UserStatus, optionsText: 'StatusName', optionsValue: 'Status', jqBootstrapValidation: {}"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- col-lg-12 -->
+        </div><!-- row -->
+        <div class="row">
+            <div class="col-sm-12">
+                @*<button class="btn btn-default padding-btn color-black pull-right margin-left-20 margin-btm-30" type="button">Cancel</button>*@
+                <input type="submit" class="btn btn-default padding-btn color-black pull-right margin-btm-30" value="Save" />
+            </div>
+        </div>
+    }
+</div>
+<style type="text/css">
+    #alertify-cancel {
+        display: none !important;
+    }
+</style>

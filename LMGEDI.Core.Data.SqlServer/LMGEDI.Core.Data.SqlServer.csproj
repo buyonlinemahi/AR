@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B5010E2C-EC7C-44D8-BBD7-6D15AE822BA1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LMGEDI.Core.Data.SqlServer</RootNamespace>
+    <AssemblyName>LMGEDI.Core.Data.SqlServer</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\AdjusterConfiguration.cs" />
+    <Compile Include="Configuration\CommissionConfiguration.cs" />
+    <Compile Include="Configuration\CommissionPaymentConfiguration.cs" />
+    <Compile Include="Configuration\DepartmentConfiguration.cs" />
+    <Compile Include="Configuration\EmployerConfiguration.cs" />
+    <Compile Include="Configuration\FileConfiguration.cs" />
+    <Compile Include="Configuration\ICRecordDetailConfiguration.cs" />
+    <Compile Include="Configuration\InsurerBranchConfiguration.cs" />
+    <Compile Include="Configuration\InsurerConfiguration.cs" />
+    <Compile Include="Configuration\InvoiceAdjustmentConfiguration.cs" />
+    <Compile Include="Configuration\InvoiceConfiguration.cs" />
+    <Compile Include="Configuration\InvoiceNoteConfiguration.cs" />
+    <Compile Include="Configuration\LienTempTableConfiguration.cs" />
+    <Compile Include="Configuration\OCRConfiguration.cs" />
+    <Compile Include="Configuration\PaymentConfiguration.cs" />
+    <Compile Include="Configuration\PaymentRefundConfiguration.cs" />
+    <Compile Include="Configuration\PendingUploadConfiguration.cs" />
+    <Compile Include="Configuration\StateConfiguration.cs" />
+    <Compile Include="Configuration\UserConfiguration.cs" />
+    <Compile Include="Constant\Consts.cs" />
+    <Compile Include="Constant\SpNames.cs" />
+    <Compile Include="Constant\Tables.cs" />
+    <Compile Include="LMGEDIDBContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AdjusterRepository.cs" />
+    <Compile Include="Repository\CommissionPaymentRepository.cs" />
+    <Compile Include="Repository\CommissionRepository.cs" />
+    <Compile Include="Repository\StateRepository.cs" />
+    <Compile Include="Repository\DepartmentRepository.cs" />
+    <Compile Include="Repository\EmployerRepository.cs" />
+    <Compile Include="Repository\FileRepository.cs" />
+    <Compile Include="Repository\ICRecordDetailRepository.cs" />
+    <Compile Include="Repository\InsurerBranchRepository.cs" />
+    <Compile Include="Repository\InsurerRepository.cs" />
+    <Compile Include="Repository\InvoiceAdjustmentRepository.cs" />
+    <Compile Include="Repository\InvoiceNoteRepository.cs" />
+    <Compile Include="Repository\InvoiceRepository.cs" />
+    <Compile Include="Repository\LienTempTableRepository.cs" />
+    <Compile Include="Repository\OCRRepository.cs" />
+    <Compile Include="Repository\PaymentRefundRepository.cs" />
+    <Compile Include="Repository\PaymentRepository.cs" />
+    <Compile Include="Repository\PendingUploadRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Base.Data.SqlServer\Core.Base.Data.SqlServer.csproj">
+      <Project>{6247ee28-1f47-44a2-8570-1975a5a733c9}</Project>
+      <Name>Core.Base.Data.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Base.Data\Core.Base.Data.csproj">
+      <Project>{73ceac75-70d5-4270-9254-8d39115a6cd6}</Project>
+      <Name>Core.Base.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.Core.Data.Model\LMGEDI.Core.Data.Model.csproj">
+      <Project>{0a9c4291-2f13-4b39-bea6-46a5c93ac995}</Project>
+      <Name>LMGEDI.Core.Data.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.Core.Data\LMGEDI.Core.Data.csproj">
+      <Project>{947d1b92-037b-4b4d-8902-b23afc88041e}</Project>
+      <Name>LMGEDI.Core.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

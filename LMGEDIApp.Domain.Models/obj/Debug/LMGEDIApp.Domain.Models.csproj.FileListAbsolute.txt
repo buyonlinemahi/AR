@@ -1,0 +1,5 @@
+D:\Mahi_TFS\LMG\LMGEDIApp.Domain.Models\bin\Debug\LMGEDIApp.Domain.Models.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Domain.Models\bin\Debug\LMGEDIApp.Domain.Models.pdb
+D:\Mahi_TFS\LMG\LMGEDIApp.Domain.Models\obj\Debug\LMGEDIApp.Domain.Models.csprojResolveAssemblyReference.cache
+D:\Mahi_TFS\LMG\LMGEDIApp.Domain.Models\obj\Debug\LMGEDIApp.Domain.Models.dll
+D:\Mahi_TFS\LMG\LMGEDIApp.Domain.Models\obj\Debug\LMGEDIApp.Domain.Models.pdb

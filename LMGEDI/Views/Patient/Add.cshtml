@@ -1,0 +1,169 @@
+﻿@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/Patient/PatientDetailViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+    <script src="~/Scripts/InputMaskViewModel.js"></script>
+   <script type="text/javascript">
+    var _PatientDetailViewModel = new PatientDetailViewModel();
+    ko.applyBindings(_PatientDetailViewModel, $("#divPatient").get(0));
+</script>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $(".datepicker").datepicker({ dateFormat: 'mm/dd/yy' });
+    });
+    </script>
+
+}
+
+<div id="divPatient">
+    @using (Html.BeginForm(GlobalConst.Actions.PatientController.Add, GlobalConst.Controllers.Patient, System.Web.Mvc.FormMethod.Post, new
+{
+    id = "frmPatientDetail",
+    enctype = "multipart/form-data",
+    data_bind = "ajaxForm : { success : function(responseText ,statusText,xhr,$form){PatientDetailSuccess(responseText);},beforeSubmit : PatientInfoFormBeforeSubmit}"
+
+}))
+    {
+        <div class="row">
+            <div class="col-lg-12 client-accordian">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading11">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse11" aria-expanded="true" aria-controls="collapse11">
+                                Patient Demographics
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                        <div class="panel-body row">
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Patient First Name :</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" required="required" data-bind="jqBootstrapValidation: {}" name="Patient.PatientFirst">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Patient Last Name :</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" required="required" data-bind="jqBootstrapValidation: {}" name="Patient.PatientLast">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Patient D.O.B :</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control datepicker" required="required" data-validation-regex-message="MM/DD/YYYY" data-validation-regex-regex="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d+$" data-bind="jqBootstrapValidation: {},masked: PatientDOB,mask : '99/99/9999'" name="Patient.PatientDOB">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Patient SSN :</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" required="required" data-bind="jqBootstrapValidation: {},masked: PatientSSN,mask : '99-99-9999'" name="Patient.PatientSSN">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Patient Claim # :</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" required="required" data-bind="jqBootstrapValidation: {}" name="Patient.PatientClaim">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Patient WCAB :</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" required="required" data-bind="jqBootstrapValidation: {}" name="Patient.PatientWCAB">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Patient Gender :</label>
+                                    <div class="col-sm-7">
+                                        <select id="PatientGender" name="Patient.PatientGender" required="required" class="form-control" data-bind="options:PatientGenders, optionsText:'GenderName',optionsValue:'GenderValue', value:$root.PatientGenderselectedItem,optionsCaption: 'Select',jqBootstrapValidation: {}"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Patient Account :</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" required="required" data-bind="jqBootstrapValidation: {}" name="Patient.PatientAccount">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Patient Insurer :</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" required="required" data-bind="jqBootstrapValidation: {}" name="Patient.PatientInsurance">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group row label-font clearfix">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Patient Employer :</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" required="required" data-bind="jqBootstrapValidation: {}" name="Patient.PatientEmployer">
+                                        <input type="hidden" class="form-control"  name="Patient.PatientID">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- col-lg-12 -->
+        </div><!-- row -->
+        <div class="row">
+            <div class="col-sm-12">
+
+                <button class="btn btn-default padding-btn color-black pull-right margin-left-20 margin-btm-30" type="button" data-bind="click:$root.btncancel">Cancel</button>
+                <button class="btn btn-default padding-btn color-black pull-right margin-btm-30" type="submit">Save</button>
+
+            </div>
+        </div>
+    }
+</div>
+
+
+<style type="text/css">
+    #alertify-cancel {
+        display: none !important;
+    }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,124 @@
+﻿@using System.Web.Script.Serialization;
+@using LMGEDIApp.Infrastructure.Global;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/CheckAssignment/CheckAssignmentViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="@Url.Content("~/Scripts/knockout/ko.pager.js")"></script>
+
+    <script type="text/javascript">
+        var OCRFileModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model));
+        var _checkAssignmentViewModel = new checkAssignmentViewModel(OCRFileModel);
+        ko.applyBindings(_checkAssignmentViewModel, $("#divCheckAssignment").get(0));
+    </script>
+}
+
+
+<div class="container-fluid" id="divCheckAssignment">
+    @*      <!--ko with:FilelandingViewModel-->*@
+    <input type="hidden" name="Take" id="hidtake" data-bind="value: $root.Take" />
+    <input type="hidden" name="Skip" id="hidskip" data-bind="value: $root.Skip" />
+    @*    <!--/ko-->*@
+
+    <div class="row">        
+        <div id="loaderDiv">
+            <input class="loader1 display-none" type="image" id="ImgSourceLoading" src="~/Content/img/loading.gif">
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 client-accordian">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading11">
+                        <h4 class="panel-title">
+                            Check Assignment
+                        </h4>
+                    </div>
+                    <div id="collapse11" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading11">
+                        <div class="panel-body row">
+                            @using (Html.BeginForm(GlobalConst.Actions.CheckAssignmentController.UploadOCRFile, GlobalConst.Controllers.CheckAssignment, FormMethod.Post, new
+                {
+                    id = "CheckAssignmentOCR",
+                    enctype = "multipart/form-data",
+                    data_bind = "ajaxForm:{success: function(responseText, statusText, xhr, $form){ AddOCRSuccess(responseText);},beforeSubmit : OCRFileFormBeforeSubmit}"
+                }))
+                        {
+                            <div class="col-sm-12">
+                                <div class="row label-font">
+                                    <div class="col-sm-8">
+                                        <div class="form-group row">
+                                            <label for="exampleInputFile" class="col-sm-3 control-label ">File input</label>
+                                            <div class="col-sm-9 pull-left">
+                                                <input type="file" class="fileuploadborder form-control" name="uploadOCRFile" id="uploadOCRFile" required="required"
+                                                       data-bind="jqBootstrapValidation:{}" accept=".pdf"
+                                                       data-validation-regex-regex="([a-zA-Z0-9\s_\\.\-:])+(.pdf)$" data-validation-regex-message="Pdf File Only" />
+                                            </div>
+                                        </div>
+                                    </div><!-- col-sm-2 -->
+                                    <div class="col-sm-4">
+                                        <button class="btn btn-default padding-btn margin-btm-30 pull-left" type="submit">Upload</button>
+                                    </div>
+                                </div><!-- row -->
+                            </div>
+                        }
+                        </div>
+                    </div>
+                </div>
+            </div><!-- col-lg-12 -->
+        </div><!-- row -->
+        <div class="row">
+            <div class="col-sm-12 margintop30">
+                <div class="white-background">
+                    <table class="table table-bordered table-striped table-condensed home-table">
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                                <th>Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--ko if:OCRSearchResult()!= null-->
+                            <!-- ko foreach:OCRSearchResult -->
+                            <tr>
+                                <td><span data-bind="text:OcrFileName"></span>                                  
+                                    <input type="hidden" data-bind="value:OcrId()" />
+                                    <input type="hidden" data-bind="value:OcrFileName()" />
+                                
+                                </td>
+                                <td> <a data-bind="attr: { 'href': '@Url.Action("AssignCheck", "CheckAssignment")/' + OcrId()}">Assign</a>
+                                &nbsp;
+                                    <a data-bind="click:$root.deleteOCRFile" href="">Delete</a>
+
+                                </td>
+                                
+                            </tr>
+                            <!--/ko-->
+                            <!--/ko-->
+                        </tbody>
+                        <tfoot>
+                            <!--ko if:OCRSearchResult()==null || OCRSearchResult().length==0-->
+                            <tr>
+                                <td colspan="6">
+                                    <div class="alert alert-info">
+                                        <button type="button" class="close" data-dismiss="alert">
+                                            &times;
+                                        </button>
+                                        No Result Found.
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- /ko -->
+                        </tfoot>
+                    </table>
+                    <nav class="margin-left">
+                        @Html.Partial("~/Views/Shared/_Paging.cshtml")
+                    </nav>
+                </div><!-- white-background -->
+            </div><!-- col-sm-12 -->
+        </div>
+    </div>
+</div>

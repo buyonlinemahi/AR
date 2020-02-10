@@ -1,0 +1,463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D013A676-A69E-4DDE-9D05-0B0F2232D6AF}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LMGEDI</RootNamespace>
+    <AssemblyName>LMGEDI</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Bytescout.BarCodeReader, Version=8.20.0.1340, Culture=neutral, PublicKeyToken=f7dd1bd9d40a50eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\External\Bytescout.BarCodeReader\Bytescout.BarCodeReader.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.1.4.12333\lib\net45-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=3.1.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\External\EPPlusLib\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.4.1.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\External\iTextSharp\5.4.1\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.3.2.3\lib\net45\Microsoft.Web.WebPages.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Omu.ValueInjecter, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\External\ValueInjecter\2.1\Omu.ValueInjecter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Unity.Mvc5">
+      <HintPath>..\packages\Unity.Mvc5.1.1\lib\net45\Unity.Mvc5.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.3.2.3\lib\net45\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.3.2.3\lib\net45\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap\bootstrap.css" />
+    <Content Include="Content\bootstrap\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\css\ie7.css" />
+    <Content Include="Content\bootstrap\css\ie8.css" />
+    <Content Include="Content\bootstrap\css\ie9.css" />
+    <Content Include="Content\bootstrap\custom.css" />
+    <Content Include="Content\bootstrap\datepicker.css" />
+    <Content Include="Content\bootstrap\font-awesome-ie7.css" />
+    <Content Include="Content\bootstrap\font-awesome.css" />
+    <Content Include="Content\bootstrap\jquery-ui-1.11.4.css" />
+    <Content Include="Content\bootstrap\override.css" />
+    <Content Include="Content\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\css\bootstrap-theme.css" />
+    <Content Include="Content\css\bootstrap-theme.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\main.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\dash_icn.png" />
+    <Content Include="Content\img\home-background.jpg" />
+    <Content Include="Content\img\loading.gif" />
+    <Content Include="Content\img\login-box-back.png" />
+    <Content Include="Content\img\login-logo-ar.png" />
+    <Content Include="Content\img\logo-ar.png" />
+    <Content Include="Content\img\shadow.png" />
+    <Content Include="Content\img\textbox-back.png" />
+    <Content Include="ErrorLog\08-19-2015.txt" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\AjaxUtil.js" />
+    <Content Include="Scripts\bootstrap\bootstrap.js" />
+    <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\InputMaskViewModel.js" />
+    <Content Include="Scripts\jquery-1.11.0.js" />
+    <Content Include="Scripts\jquery-1.11.0.min.js" />
+    <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.maskedinput.min.js" />
+    <Content Include="Scripts\jquery.tmpl.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JQuery\jquery-migrate-1.0.0.js" />
+    <Content Include="Scripts\JQuery\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\JQuery\moment.js" />
+    <Content Include="Scripts\bootstrap\jqBootstrapValidation.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.1.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\JQuery\jquery-ui-1.11.2.js" />
+    <Content Include="Scripts\JQuery\jquery-ui-1.11.2.min.js" />
+    <Content Include="Scripts\JQuery\modernizr-2.6.2-respond-1.1.0.min.js" />
+    <Content Include="Scripts\JQuery\npm.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\knockout.mapping.js" />
+    <Content Include="Scripts\knockout\Custom\knockout.custom-binding-handlers.js" />
+    <Content Include="Scripts\knockout\Custom\knockout.custom-extenders.js" />
+    <Content Include="Scripts\knockout\knockout-3.0.0.js" />
+    <Content Include="Scripts\knockout\knockout-3.1.0.debug.js" />
+    <Content Include="Scripts\knockout\knockout.mapping.js" />
+    <Content Include="Scripts\knockout\ko.pager.js" />
+    <Content Include="Scripts\knockout\viewModel\CheckAssignment\AssignCheckSearchFileViewModel.js" />
+    <Content Include="Scripts\knockout\viewModel\CheckAssignment\CheckAssignmentViewModel.js" />
+    <Content Include="Scripts\knockout\viewModel\ClientCommission\ClientCommissionViewModel.js" />
+    <Content Include="Scripts\knockout\viewModel\ClientCommission\getCommissionViewModel.js" />
+    <Content Include="Scripts\knockout\viewModel\File\FileICDepViewModel.js" />
+    <Content Include="Scripts\knockout\viewModel\File\FileLandingViewModel.js" />
+    <Content Include="Scripts\knockout\viewModel\File\FileViewModel.js" />
+    <Content Include="Scripts\knockout\viewModel\ImportExcel\ImportExcelViewModel.js" />
+    <Content Include="Scripts\knockout\viewModel\PendingUpload\PendingUploadViewModel.js" />
+    <Content Include="Scripts\knockout\viewModel\User\UserAddViewModel.js" />
+    <Content Include="Scripts\knockout\viewModel\User\UserDetailViewModel.js" />
+    <Content Include="Scripts\knockout\viewModel\User\UserlandingViewModel.js" />
+    <Content Include="Scripts\ko.pager.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\moneyformatt.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Views\Home\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\css\bootstrap-theme.css.map" />
+    <Content Include="Content\css\bootstrap.css.map" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_Paging.cshtml" />
+    <Content Include="Views\User\Userlanding.cshtml" />
+    <Content Include="Views\User\Add.cshtml" />
+    <Content Include="Views\User\Detail.cshtml" />
+    <Content Include="Views\File\Index.cshtml" />
+    <Content Include="Views\Shared\Adjuster\_Adjuster.cshtml" />
+    <Content Include="Views\Shared\Employer\_Employer.cshtml" />
+    <Content Include="Views\Shared\Insurer\_Insurer.cshtml" />
+    <Content Include="Views\Shared\InsurerBranch\_InsurerBranch.cshtml" />
+    <Content Include="Views\Shared\Invoice\_Invoice.cshtml" />
+    <Content Include="Views\Shared\Adjuster\_AddAdjuster.cshtml" />
+    <Content Include="Views\Shared\Employer\_AddEmployer.cshtml" />
+    <Content Include="Views\Shared\Insurer\_AddInsurer.cshtml" />
+    <Content Include="Views\Shared\InsurerBranch\_AddInsurerBranch.cshtml" />
+    <Content Include="Views\File\FileLanding.cshtml" />
+    <Content Include="Views\ExportExcelToDatabase\ImportExcel.cshtml" />
+    <Content Include="Views\Shared\Invoice\_InvoiceDetails.cshtml" />
+    <Content Include="Views\Shared\Payment\_PaymentDetails.cshtml" />
+    <Content Include="Views\PendingUpload\Index.cshtml" />
+    <Content Include="Views\CheckAssignment\Index.cshtml" />
+    <Content Include="Views\CheckAssignment\AssignCheck.cshtml" />
+    <Content Include="Views\Shared\CheckAssign\_SearchFile.cshtml" />
+    <Content Include="Views\Shared\Payment\_PaymentRefundDetails.cshtml" />
+    <Content Include="Views\File\InvoiceIC.cshtml" />
+    <Content Include="Views\Commission\Index.cshtml" />
+    <Content Include="Views\Commission\ClientCommission.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\alertify\alertify.core.css" />
+    <Content Include="Content\alertify\alertify.default.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\alertify\alertify.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="Controllers\CheckAssignmentController.cs" />
+    <Compile Include="Controllers\CommissionController.cs" />
+    <Compile Include="Controllers\ExportExcelToDatabaseController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\PendingUploadController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Base.Data.SqlServer\Core.Base.Data.SqlServer.csproj">
+      <Project>{6247ee28-1f47-44a2-8570-1975a5a733c9}</Project>
+      <Name>Core.Base.Data.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Base.Data\Core.Base.Data.csproj">
+      <Project>{73ceac75-70d5-4270-9254-8d39115a6cd6}</Project>
+      <Name>Core.Base.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.BL.Implementation\LMGEDI.Core.BL.Implementation.csproj">
+      <Project>{0ee71eaf-8e23-4464-9f3a-20ac358809b8}</Project>
+      <Name>LMGEDI.Core.BL.Implementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.BL.Model\LMGEDI.Core.BL.Model.csproj">
+      <Project>{c6b31b31-ce16-4a7a-9559-dbdc5f14be6b}</Project>
+      <Name>LMGEDI.Core.BL.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.Core.BL\LMGEDI.Core.BL.csproj">
+      <Project>{2917cb2d-3613-4859-b990-d1d65b405227}</Project>
+      <Name>LMGEDI.Core.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.Core.Data.Model\LMGEDI.Core.Data.Model.csproj">
+      <Project>{0a9c4291-2f13-4b39-bea6-46a5c93ac995}</Project>
+      <Name>LMGEDI.Core.Data.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.Core.Data.SqlServer\LMGEDI.Core.Data.SqlServer.csproj">
+      <Project>{b5010e2c-ec7c-44d8-bbd7-6d15ae822ba1}</Project>
+      <Name>LMGEDI.Core.Data.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDI.Core.Data\LMGEDI.Core.Data.csproj">
+      <Project>{947d1b92-037b-4b4d-8902-b23afc88041e}</Project>
+      <Name>LMGEDI.Core.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDIApp.Domain.Models\LMGEDIApp.Domain.Models.csproj">
+      <Project>{ac858dcf-e5df-4262-8c92-3aeccc7b514c}</Project>
+      <Name>LMGEDIApp.Domain.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDIApp.Infrastructure.ApplicationServices.Contracts\LMGEDIApp.Infrastructure.ApplicationServices.Contracts.csproj">
+      <Project>{ac5cdfcb-d07a-4f9c-b0b3-efa4ccffed86}</Project>
+      <Name>LMGEDIApp.Infrastructure.ApplicationServices.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDIApp.Infrastructure.Base\LMGEDIApp.Infrastructure.Base.csproj">
+      <Project>{7382bdbd-f535-4465-a7ee-2655618cf747}</Project>
+      <Name>LMGEDIApp.Infrastructure.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDIApp.Infrastructure.Global\LMGEDIApp.Infrastructure.Global.csproj">
+      <Project>{a817ff8a-564c-43be-ad6d-25dcf1c85a49}</Project>
+      <Name>LMGEDIApp.Infrastructure.Global</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDIApp.Infrastructure.Services\LMGEDIApp.Infrastructure.ApplicationServices.csproj">
+      <Project>{a1c15531-f5ce-49a1-bc60-a8228dc7890a}</Project>
+      <Name>LMGEDIApp.Infrastructure.ApplicationServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMGEDIApp.Infrastrucuture.ApplicationFilters\LMGEDIApp.Infrastructure.ApplicationFilters.csproj">
+      <Project>{74932453-446a-4896-9a39-20ed7272e988}</Project>
+      <Name>LMGEDIApp.Infrastructure.ApplicationFilters</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>2326</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:2326/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,121 @@
+﻿@model LMGEDIApp.Domain.Models.ValidateExcelData.PatientBillingValidationViewModel
+@using System.Web.Script.Serialization
+@using LMGEDIApp.Infrastructure.Global;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout/viewModel/ValidateExcelData/ValidateExcelDataViewModel.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")"></script>
+    <script src="@Url.Content("~/Scripts/knockout/ko.pager.js")"></script>
+    <script type="text/javascript">
+        var patientBillingValidationModel = @MvcHtmlString.Create(new JavaScriptSerializer().Serialize(Model));
+        var _patientBillingValidData = new ValidateExcelDataViewModel(patientBillingValidationModel);
+        ko.applyBindings(_patientBillingValidData, $("#divPatientBillingValidation").get(0));
+    </script>
+
+}
+
+<div class="container-fluid" id="divPatientBillingValidation">
+    <div class="row">
+        <!-- sidebar -->
+        <!-- header-bar -->
+
+        <div class="col-sm-12">
+           <!-- row -->
+            <!--ko with:ValidateExcelDataViewModel-->
+            <input type="hidden" name="Take" id="hidtake" data-bind="value: $root.Take" />
+            <input type="hidden" name="Skip" id="hidskip" data-bind="value: $root.Skip" />
+            <!--/ko-->
+
+
+            <div class="clearfix"></div>
+
+
+            <!--ko if:(TotalItemCount() > 0 || TotalItemCount() == 0 )-->
+            <div class="row">
+                <div class="col-sm-12 margintop30">
+                    <div class="white-background">
+                        <table class="table table-bordered table-striped table-condensed home-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-3">Patient Name</th>
+                                    <th class="col-sm-3">SSN</th>
+                                    <th class="col-sm-3">Patient Insurance </th>
+                                    <th class="col-sm-2">Comment</th>
+                                    <th class="col-sm-1">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--ko if:PatientBillingValidationResult!= null-->
+                                <!-- ko foreach:PatientBillingValidationResult -->
+                                <tr>
+                                    <!--ko if:PatientFName()!=null-->
+                                    <td ><span data-bind="text:PatientFName" />
+                                        <input type="hidden" data-bind="attr: { name: 'patientBillingValidationViewModel['+ $index() + '\].PatientFName' },value:PatientFName" />
+                                        <input type="hidden" data-bind="attr: { name: 'patientBillingValidationViewModel['+ $index() + '\].BillingID' },value:BillingID" />
+                                    </td>
+                                    <!--/ko-->
+                                    <!--ko if:PatientFName()==null-->
+                                    <td >
+                                        <input type="text" data-bind="attr: { name: 'patientBillingValidationViewModel['+ $index() + '\].PatientFName' },value:PatientFName,jqBootstrapValidation: {}" />
+                                        <input type="hidden" data-bind="attr: { name: 'patientBillingValidationViewModel['+ $index() + '\].BillingID' },value:BillingID" />                                        
+                                    </td>
+                                    <!--/ko-->
+                                    <!--ko if:PatientSSN()!=null-->
+                                    <td >
+                                        <span data-bind="text :PatientSSN" />
+                                        <input type="hidden" data-bind="attr: { name: 'patientBillingValidationViewModel['+ $index() + '\].PatientSSN' },value:PatientSSN" />
+                                    </td>
+                                    <!--/ko-->
+                                    <!--ko if:PatientSSN()==null-->
+                                    <td> <input type="text" data-bind="attr: { name: 'patientBillingValidationViewModel['+ $index() + '\].PatientSSN' },value:PatientSSN,jqBootstrapValidation: {}" />
+                                        
+                                    </td>
+                                    <!--/ko-->
+                                    <!--ko if:BillingInsurance()!=null-->
+                                    <td> <span data-bind="text :BillingInsurance"/>
+                                        <input type="hidden" data-bind="attr: { name: 'patientBillingValidationViewModel['+ $index() + '\].BillingInsurance' },value:BillingInsurance" /></td>
+
+                                    <!--/ko-->
+                                    <!--ko if:BillingInsurance()==null-->
+                                    <td> <input type="text" data-bind="attr: { name: 'patientBillingValidationViewModel['+ $index() + '\].BillingInsurance' },value:BillingInsurance,jqBootstrapValidation: {}"  />
+                                                                            </td>
+                                    <!--/ko--> 
+                                    <td data-bind="text:PatientFName()!=null ? PatientSSN()!=null ?BillingInsurance()!=null?'Patient Demographic Missing':'Patient Insurance is Missing' : 'Patient SSN is Missing' :'Patient Name is Missing' "></td>
+                                    <td><a data-bind="click :$root.UpdateAndValidateData" href="">Update</a></td>
+                                </tr>
+                                <!--/ko-->
+                                <!--/ko-->
+
+                            </tbody>
+                            <tfoot>
+                                <!--ko if:(PatientBillingValidationResult().length== 0)-->
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="alert alert-info">
+                                            <button type="button" class="close" data-dismiss="alert">
+                                                &times;
+                                            </button>
+                                            No Result Found.
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- /ko -->
+                            </tfoot>
+                        </table>
+                        <nav class="margin-left">
+
+                            @Html.Partial("~/Views/Shared/_Paging.cshtml")
+                        </nav>
+                    </div><!-- white-background -->
+                </div><!-- col-sm-12 -->
+            </div>
+
+            <!-- /ko -->
+            <!--  row -->
+        </div><!-- col-sm-12 -->
+    </div><!-- main col-sm-9 -->
+</div><!--  row -->
